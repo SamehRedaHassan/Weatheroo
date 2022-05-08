@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="4dp"
+        android:paddingRight="4dp">
+
+        <TextView
+            android:id="@+id/dayTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="fill"
+            android:paddingLeft="4dp"
+            android:text="Saturday"
+            android:textColor="@color/midnightblue"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/statusDailyImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            app:srcCompat="@drawable/ic_cloudy" />
+
+        <TextView
+            android:id="@+id/tempMaxTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="25°"
+            android:textColor="@color/midnightblue"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/minMaxTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="15°"
+            android:textColor="@color/steelblue"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

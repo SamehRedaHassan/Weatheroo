@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Weatheroo</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="locationTxtView">San Francisco</string>
+    <string name="currentTempTxtView">18 °</string>
+    <string name="today">Today</string>
+    <string name="Weelly">Weelly</string>
+    <string name="nextWeek">Next Week</string>
 </resources>
