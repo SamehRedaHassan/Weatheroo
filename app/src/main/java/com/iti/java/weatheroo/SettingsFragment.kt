@@ -6,9 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
-import com.iti.java.weatheroo.R
-import com.iti.java.weatheroo.databinding.FragmentFavouritesBinding
 import com.iti.java.weatheroo.databinding.FragmentSettingsBinding
 import com.iti.java.weatheroo.map.view.MapsActivity
 import com.iti.java.weatheroo.utils.Constants
@@ -16,10 +13,6 @@ import com.iti.java.weatheroo.utils.Utils
 
 class SettingsFragment : Fragment() {
     var binding: FragmentSettingsBinding? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
