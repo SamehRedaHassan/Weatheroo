@@ -7,4 +7,14 @@
     <string name="today">Today</string>
     <string name="Weelly">Weelly</string>
     <string name="nextWeek">Next Week</string>
+    <string name="shared_pref">SharedPreferences</string>
+    <string name="lat">Latitude</string>
+    <string name="lon">Longitude</string>
+    <string name="location">Location</string>
+    <string name="timeZone">TimeZone</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="Save">Save Location</string>
+    <string name="saveBtn">Save</string>
+    <string name="Units" />
+    <string name="units">Units</string>
 </resources>

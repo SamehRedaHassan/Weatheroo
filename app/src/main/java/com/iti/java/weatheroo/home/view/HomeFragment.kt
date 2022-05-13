@@ -12,6 +12,7 @@ import androidx.lifecycle.coroutineScope
 //import androidx.navigation.NavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.iti.java.weatheroo.databinding.FragmentHomeBinding
 import com.iti.java.weatheroo.home.adpters.DailyTemperatureAdapter
 import com.iti.java.weatheroo.home.adpters.WeeklyTemperatureAdapter
@@ -21,7 +22,12 @@ import com.iti.java.weatheroo.model.CurrentWeatherModel
 import com.iti.java.weatheroo.model.DailyWeatherModel
 import com.iti.java.weatheroo.model.Repository.RepositoryImpl
 import com.iti.java.weatheroo.model.network.RetrofitService
+import com.iti.java.weatheroo.model.room.LocalSource
+import com.iti.java.weatheroo.model.room.LocalSourceImpl
+import com.iti.java.weatheroo.utils.Constants
+import com.iti.java.weatheroo.utils.Utils
 import kotlinx.coroutines.*
+import okhttp3.internal.Util
 import java.util.ArrayList
 
 class HomeFragment : Fragment() {
@@ -87,7 +93,7 @@ class HomeFragment : Fragment() {
     private fun configureUI() {
         viewModel = ViewModelProvider(
             this,
-            HomeViewModelFactory(RepositoryImpl(requireContext(), retrofitService))
+            HomeViewModelFactory(RepositoryImpl(requireContext(), retrofitService,LocalSourceImpl(requireContext())),requireContext())
         ).get(HomeViewModel::class.java)
 
       dailyTemperatureRecyclerView = binding!!.todayWeatherRecycler
@@ -102,12 +108,14 @@ class HomeFragment : Fragment() {
         weeklyTemperatureRecyclerView.adapter = weeklyTemperatureAdapter
         viewModel.hourly.observe(this, Observer {
             Log.i("TAG", "onCreatttttte: $it")
-            binding!!.locationTextView.text = "AAAAAA"
-            binding!!.temperatureTextView.text = viewModel.currentWeather.temp.toString()
+            Glide.with(requireContext()).load(Constants.ICON_BASE_URL +  viewModel.currentWeather.weather.get(0).icon + Constants.PNG) .into(binding!!.weatherImage)
+
+            binding!!.locationTextView.text = Utils.getCurrentCityFromLatLon(requireContext(),Utils.getCurrentLattitude(requireContext()),Utils.getCurrentLongitude(requireContext()))
+            binding!!.temperatureTextView.text = viewModel.currentWeather.temp.toString().subSequence(0,2).toString() + Utils.getCurrentTemperatureUnit(requireContext())
             binding!!.statusTxtView.text = viewModel.currentWeather.weather.get(0).main
-            binding!!.windSpeedTextView.text = viewModel.currentWeather.windSpeed.toString()
-            binding!!.humidityTxtView.text = viewModel.currentWeather.humidity.toString()
-            binding!!.PressureTxtView.text = viewModel.currentWeather.pressure.toString()
+            binding!!.windSpeedTextView.text = viewModel.currentWeather.windSpeed.toString() + Utils.getCurrentWindUnit(requireContext())
+            binding!!.humidityTxtView.text = viewModel.currentWeather.humidity.toString() + Utils.getCurrentHumidityUnit()
+            binding!!.PressureTxtView.text = viewModel.currentWeather.pressure.toString() +  Utils.getCurrentPressureUnit()
 
 
 

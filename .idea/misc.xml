@@ -11,14 +11,15 @@
         <entry key="..\:/androidProjects/Weatheroo/app/src/main/res/drawable/ic_outline_settings_24.xml" value="0.1015625" />
         <entry key="..\:/androidProjects/Weatheroo/app/src/main/res/drawable/ic_windy.xml" value="0.1" />
         <entry key="..\:/androidProjects/Weatheroo/app/src/main/res/layout/activity_main.xml" value="0.1875" />
+        <entry key="..\:/androidProjects/Weatheroo/app/src/main/res/layout/activity_maps.xml" value="0.11277173913043478" />
         <entry key="..\:/androidProjects/Weatheroo/app/src/main/res/layout/activity_splash.xml" value="0.2015625" />
         <entry key="..\:/androidProjects/Weatheroo/app/src/main/res/layout/alert_cell.xml" value="0.25" />
         <entry key="..\:/androidProjects/Weatheroo/app/src/main/res/layout/daily_cell.xml" value="0.25" />
-        <entry key="..\:/androidProjects/Weatheroo/app/src/main/res/layout/favourite_cell.xml" value="0.33" />
+        <entry key="..\:/androidProjects/Weatheroo/app/src/main/res/layout/favourite_cell.xml" value="0.25" />
         <entry key="..\:/androidProjects/Weatheroo/app/src/main/res/layout/fragment_alerts.xml" value="0.19739583333333333" />
         <entry key="..\:/androidProjects/Weatheroo/app/src/main/res/layout/fragment_favourites.xml" value="0.19739583333333333" />
         <entry key="..\:/androidProjects/Weatheroo/app/src/main/res/layout/fragment_home.xml" value="0.15090543259557343" />
-        <entry key="..\:/androidProjects/Weatheroo/app/src/main/res/layout/fragment_settings.xml" value="0.19739583333333333" />
+        <entry key="..\:/androidProjects/Weatheroo/app/src/main/res/layout/fragment_settings.xml" value="0.22" />
         <entry key="..\:/androidProjects/Weatheroo/app/src/main/res/layout/hourly_cell.xml" value="0.33" />
         <entry key="..\:/androidProjects/Weatheroo/app/src/main/res/menu/bottom_nav_menu.xml" value="0.19739583333333333" />
       </map>

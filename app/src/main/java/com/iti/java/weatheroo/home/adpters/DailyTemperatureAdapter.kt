@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.iti.java.weatheroo.R
 import com.iti.java.weatheroo.model.CurrentWeatherModel
 import com.iti.java.weatheroo.model.DailyWeatherModel
+import com.iti.java.weatheroo.utils.Constants
 import com.iti.java.weatheroo.utils.Utils
 
 class DailyTemperatureAdapter(var context: Context, var data: List<CurrentWeatherModel>) :
@@ -19,7 +21,7 @@ class DailyTemperatureAdapter(var context: Context, var data: List<CurrentWeathe
     //  var context: Context? = null
 
 
-    class DailyViewHolder(var layout: View) : RecyclerView.ViewHolder(layout) {
+    class DailyViewHolder(var layout: View ) : RecyclerView.ViewHolder(layout) {
         var timeTextView: TextView = itemView.findViewById(R.id.timeTxtView)
         var statusImageView: ImageView = itemView.findViewById(R.id.imageView)
         var tempTextView: TextView = itemView.findViewById(R.id.tempHourly)
@@ -35,10 +37,10 @@ class DailyTemperatureAdapter(var context: Context, var data: List<CurrentWeathe
 
     override fun onBindViewHolder(holder: DailyViewHolder, position: Int) {
         holder.timeTextView.setText(
-            Utils.Utils.getDateTime(data.get(position).dt.toString())
+            Utils.Utils.getDateTime((data.get(position).dt), Utils.getCurrentLang(context) )
            )
-     //   Glide.with(context) .load(data.get(position).strSportThumb) .into(holder.statusImageView)
-        holder.tempTextView.setText(data.get(position).temp.toString())
+        Glide.with(context).load(Constants.ICON_BASE_URL +  data.get(position).weather.get(0).icon +Constants.PNG) .into(holder.statusImageView)
+        holder.tempTextView.setText(data.get(position).temp.toString() + Utils.getCurrentTemperatureUnit(context))
 
     }
 
@@ -48,7 +50,6 @@ class DailyTemperatureAdapter(var context: Context, var data: List<CurrentWeathe
     }
     fun setDailyWeather(dailyWeatherResponse: List<CurrentWeatherModel>) {
         this.data = dailyWeatherResponse
-        Log.i("TAG", "setdailyWeatherResponseList: " + dailyWeatherResponse.size)
         notifyDataSetChanged()
     }
 }

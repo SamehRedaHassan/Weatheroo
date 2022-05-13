@@ -1,29 +1,27 @@
 package com.iti.java.weatheroo.home.view_model
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.iti.java.weatheroo.model.CurrentWeatherModel
-import com.iti.java.weatheroo.model.DailyWeatherModel
+import com.iti.java.weatheroo.model.*
 import com.iti.java.weatheroo.model.Repository.Repository
-import com.iti.java.weatheroo.model.WeatherResponse
-import com.iti.java.weatheroo.model.WeatherStatus
+import com.iti.java.weatheroo.utils.Utils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.lang.IllegalArgumentException
 
-class HomeViewModel(private val _irepo : Repository): ViewModel()  {
+class HomeViewModel(private val _irepo : Repository,val context: Context): ViewModel()  {
     lateinit var currentWeather : CurrentWeatherModel
 
     val hourly = MutableLiveData<List<CurrentWeatherModel>>()
     val daily = MutableLiveData<List<DailyWeatherModel>>()
 
-    // var weatherResponse = WeatherResponse(0.0,0.0,"",0, CurrentWeatherModel(0,0.0,0.0,0,0,0,0.0,MutableLiveData<List<WeatherStatus>>(),0,0.0,0.0,0,0,0,0.0,0),MutableLiveData<List<CurrentWeatherModel>>(),MutableLiveData<List<DailyWeatherModel>>())
-    fun getCurrentWeather()  {
-        val response = _irepo.getWeatherForeCast(30.560930801547254,31.003141776331283)
+    fun getCurrentWeather( )  {
+        val response = _irepo.getWeatherForeCast(Utils.getCurrentLattitude(context),Utils.getCurrentLongitude(context))
         response.enqueue(object : Callback<WeatherResponse> {
             override fun onResponse(
                 call: Call<WeatherResponse>,
@@ -31,6 +29,11 @@ class HomeViewModel(private val _irepo : Repository): ViewModel()  {
                 currentWeather = response.body()!!.current
                 hourly.postValue(response.body()!!.hourly)
                 daily.postValue(response.body()!!.daily)
+//                if(){
+//                    val favObj = FavouriteLocation(response.body()!!.lat,response.body()!!.lon,response.body()!!.timezone)
+//                    _irepo.addFavouriteLocation(favObj)
+//                }
+
                 Log.i("QQQQQQQQ", "onResponse: " + response.body())
 
             }
@@ -46,12 +49,3 @@ class HomeViewModel(private val _irepo : Repository): ViewModel()  {
 
 
 
-class HomeViewModelFactory(private val _irepo : Repository): ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return if (modelClass.isAssignableFrom(HomeViewModel::class.java)){
-            HomeViewModel(_irepo) as T
-        }else{
-            throw IllegalArgumentException("HomeViewModel class not found")
-        }
-    }
-}

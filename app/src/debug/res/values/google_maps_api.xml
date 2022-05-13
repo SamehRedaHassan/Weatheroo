@@ -1,0 +1,24 @@
+<resources>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=E7:FB:65:92:97:76:00:E0:D4:B5:B0:01:09:EE:61:24:1F:AD:9C:4A%3Bcom.iti.java.weatheroo
+
+    You can also add your credentials to an existing key, using these values:
+
+    Package name:
+    com.iti.java.weatheroo
+
+    SHA-1 certificate fingerprint:
+    E7:FB:65:92:97:76:00:E0:D4:B5:B0:01:09:EE:61:24:1F:AD:9C:4A
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBDuSVbHYvWv8hVPoOBUSTtud_fEN0Q16s</string>
+</resources>

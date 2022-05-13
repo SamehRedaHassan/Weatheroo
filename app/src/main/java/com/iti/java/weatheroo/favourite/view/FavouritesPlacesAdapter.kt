@@ -1,30 +1,29 @@
 package com.iti.java.weatheroo.favourite.view
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.iti.java.weatheroo.R
 import com.iti.java.weatheroo.home.adpters.DailyTemperatureAdapter
 import com.iti.java.weatheroo.model.CurrentWeatherModel
+import com.iti.java.weatheroo.model.FavouriteLocation
+import com.iti.java.weatheroo.utils.Utils
 
-class FavouritesPlacesAdapter (val context: Context, val data: List<CurrentWeatherModel>) :
+class FavouritesPlacesAdapter (val context: Context, var data: List<FavouriteLocation>,val delgate : NavigationDelegate) :
     RecyclerView.Adapter<FavouritesPlacesAdapter.FavouritePlaceViewHolder>(){
 
     class FavouritePlaceViewHolder(var layout: View) : RecyclerView.ViewHolder(layout) {
-//        var timeTextView: TextView = itemView.findViewById(R.id.timeTxtView)
-//        var statusImageView: ImageView = itemView.findViewById(R.id.imageView)
-//        var tempTextView: TextView = itemView.findViewById(R.id.tempHourly)
+        var placeTextView: TextView = itemView.findViewById(R.id.favouritePlaceTxtView)
+
     }
 
     override fun onCreateViewHolder(recyclerView: ViewGroup, viewType: Int): FavouritePlaceViewHolder {
-//        var timeTextView: TextView = itemView.findViewById(R.id.timeTxtView)
-//        var statusImageView: ImageView = itemView.findViewById(R.id.imageView)
-//        var tempTextView: TextView = itemView.findViewById(R.id.tempHourly)
-
         val layoutInflater = LayoutInflater.from(recyclerView.context)
         val v: View =
             layoutInflater.inflate(R.layout.favourite_cell, recyclerView, false)
@@ -33,10 +32,16 @@ class FavouritesPlacesAdapter (val context: Context, val data: List<CurrentWeath
     }
 
     override fun onBindViewHolder(holder: FavouritePlaceViewHolder, position: Int) {
+        holder.placeTextView.setText(data.get(position).name)
+        holder.layout.setOnClickListener(View.OnClickListener {
+            Utils.setCurrentLatitude(context,data.get(position).latitude.toString())
+            Utils.setCurrentLongitude(context,data.get(position).longitude.toString())
+            delgate.navigateToHome()
+        })
     }
 
     override fun getItemCount(): Int {
-        return  20
+        return  data.size
     }
 
 }

@@ -8,9 +8,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.iti.java.weatheroo.R
 import com.iti.java.weatheroo.model.CurrentWeatherModel
 import com.iti.java.weatheroo.model.DailyWeatherModel
+import com.iti.java.weatheroo.utils.Constants
+import com.iti.java.weatheroo.utils.Utils
 
 class WeeklyTemperatureAdapter (val context: Context, var data: List<DailyWeatherModel>) :
     RecyclerView.Adapter<WeeklyTemperatureAdapter.WeeklyViewHolder>(){
@@ -31,10 +34,10 @@ class WeeklyTemperatureAdapter (val context: Context, var data: List<DailyWeathe
     }
 
     override fun onBindViewHolder(holder: WeeklyViewHolder, position: Int) {
-           holder.dayTextView.setText(data.get(position).dt.toString())
-          //  holder.tempTextView.setText(data.get(position).feelsLike.toString())
-        holder.tempMaxTextView.setText(data.get(position).temp.max.toString())
-        holder.tempMinTextView.setText(data.get(position).temp.min.toString())
+           holder.dayTextView.setText(Utils.getDayOfWeek(data.get(position).dt) )
+        Glide.with(context).load(Constants.ICON_BASE_URL +  data.get(position).weather.get(0).icon + Constants.PNG) .into(holder.statusImageView)
+        holder.tempMaxTextView.setText(data.get(position).temp.max.toString() + Utils.getCurrentTemperatureUnit(context))
+        holder.tempMinTextView.setText(data.get(position).temp.min.toString() + Utils.getCurrentTemperatureUnit(context))
 
 
     }
