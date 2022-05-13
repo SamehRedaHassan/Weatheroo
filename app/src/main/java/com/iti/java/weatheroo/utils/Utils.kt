@@ -59,7 +59,7 @@ class Utils {
 
        fun getCurrentUnit(context :Context):String{
            val sharedPreference = context.getSharedPreferences(Constants.Shared_Preferences, Context.MODE_PRIVATE)
-           return sharedPreference.getString(Constants.Measure_Unit,"en")!!
+           return sharedPreference.getString(Constants.Measure_Unit,Constants.METRIC)!!
        }
 
        fun setCurrentUnit(context :Context , unit : String){

@@ -1,4 +1,4 @@
-package com.iti.java.weatheroo.settings
+package com.iti.java.weatheroo
 
 import android.content.Intent
 import android.os.Bundle
@@ -25,6 +25,7 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         applyOldSettings()
+        setupListeners()
     }
 
     private fun applyOldSettings() {
@@ -37,6 +38,11 @@ class SettingsFragment : Fragment() {
         when (Utils.getCurrentLang(requireContext())) {
             "ar" -> binding!!.radioBtnArabic.isChecked = true
             "en" -> binding!!.radioBtnEnglish.isChecked = true
+        }
+
+        when (Utils.getISUsingGPS(requireContext())) {
+            true -> binding!!.radioBtnGps.isChecked = true
+            false -> binding!!.radioBtnMap.isChecked = true
         }
     }
 
@@ -71,12 +77,10 @@ class SettingsFragment : Fragment() {
             when (checkedId) {
                 binding!!.radioBtnImperial.id  -> {
                     Utils.setCurrentUnit(requireContext(),Constants.IMPERIAL)
-
                 }
                 binding!!.radioBtnStandard.id -> {
                     Utils.setCurrentUnit(requireContext(),Constants.STANDARD)
                 }
-
                 binding!!.radioBtnMetric.id -> {
                     Utils.setCurrentUnit(requireContext(),Constants.METRIC)
                 }
@@ -87,6 +91,4 @@ class SettingsFragment : Fragment() {
     private fun saveCurrentGPSLocation() {
         TODO("Not yet implemented")
     }
-
-
 }

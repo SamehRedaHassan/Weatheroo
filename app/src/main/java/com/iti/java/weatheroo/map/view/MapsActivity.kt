@@ -71,7 +71,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     viewModel.addFavourite(favouriteObject)
                     finish()
                 }
-                Constants.SOURCE_FRAGMENT -> {
+                Constants.SETTINGS -> {
                     saveLatLonToSharedPreferences()
                     finish()
                 }
