@@ -1,5 +1,6 @@
 package com.iti.java.weatheroo.map.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -13,6 +14,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.iti.java.weatheroo.MainActivity
 import com.iti.java.weatheroo.R
 import com.iti.java.weatheroo.databinding.ActivityMapsBinding
 import com.iti.java.weatheroo.home.view_model.HomeViewModel
@@ -71,25 +73,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     viewModel.addFavourite(favouriteObject)
                     finish()
                 }
+                Constants.SPLASH -> {
+                    saveLatLonToSharedPreferences()
+                    val intent = Intent(this , MainActivity::class.java)
+                    startActivity(intent)
+                }
+
                 Constants.SETTINGS -> {
                     saveLatLonToSharedPreferences()
                     finish()
                 }
-//                "gpsOrMap" -> {
-//                    var latlng = "${SharedPrefsHelper.getLatitude(this)},${SharedPrefsHelper.getLongitude(this)}"
-//                    SharedPrefsHelper.setPreviousLatLng(this , latlng)
-//                    SharedPrefsHelper.setLatitude(this , currentLocation.latitude.toString())
-//                    SharedPrefsHelper.setLongitude(this , currentLocation.longitude.toString())
-//                    val i = Intent(this , MainActivity::class.java)
-//                    startActivity(i)
-//                }
             }
 
         }
     }
 private fun saveLatLonToSharedPreferences(){
-    //var latlng = "${SharedPrefsHelper.getLatitude(this)},${SharedPrefsHelper.getLongitude(this)}"
-  //  SharedPrefsHelper.setPreviousLatLng(this , latlng)
+
         val favouriteObject = FavouriteLocation(
             currentLocation.latitude,
             currentLocation.longitude,

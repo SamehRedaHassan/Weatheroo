@@ -24,6 +24,7 @@ class Constants {
         const val SOURCE_FRAGMENT    = "SOURCE"
         const val FAVOURITES         = "FAVOURITES"
         const val SETTINGS           = "SETTINGS"
+        const val SPLASH             = "SPLASH"
         const val CHOICE_FRAGMENT    = "CHOICE_FRAGMENT"
         const val MY_DATA_BASE       = "MY_DATA_BASE"
         const val Measure_Unit       = "Temperature_Unit"
@@ -34,9 +35,7 @@ class Constants {
         const val ENGLISH_LANGUAGE   = "en"
         const val Arabic_LANGUAGE    = "ar"
         const val IS_USING_GPS       = "IS_USING_GPS"
-
-
-
+        const val IS_FIRST_LAUNCH    = "IS_FIRST_LAUNCH"
     }
 }
 
@@ -60,6 +59,18 @@ class Utils {
        fun getCurrentUnit(context :Context):String{
            val sharedPreference = context.getSharedPreferences(Constants.Shared_Preferences, Context.MODE_PRIVATE)
            return sharedPreference.getString(Constants.Measure_Unit,Constants.METRIC)!!
+       }
+
+       fun setIsFirstLaunch(context :Context , isFirstLaunch : Boolean){
+           val sharedPreference = context.getSharedPreferences(Constants.Shared_Preferences, Context.MODE_PRIVATE)
+           var editor = sharedPreference.edit()
+           editor.putBoolean(Constants.IS_FIRST_LAUNCH,isFirstLaunch)
+           editor.apply()
+       }
+
+       fun getIsFirstLaunch(context :Context ):Boolean{
+           val sharedPreference = context.getSharedPreferences(Constants.Shared_Preferences, Context.MODE_PRIVATE)
+           return sharedPreference.getBoolean(Constants.IS_FIRST_LAUNCH, true)
        }
 
        fun setCurrentUnit(context :Context , unit : String){
