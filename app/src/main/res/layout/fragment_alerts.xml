@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".alarms.AlertsFragment">
+    tools:context=".alerts.view.AlertsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/alertsRecycler"
@@ -16,17 +16,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnAddFavId"
+        android:id="@+id/addAlerrttBtn"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_margin="16dp"
         android:clickable="true"
-        android:scaleType="center"
         android:src="@drawable/ic_baseline_add_24"
-        app:backgroundTint="@color/white"
+        app:layout_anchorGravity="bottom|right|end"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@color/design_default_color_primary_dark"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_favourites" />
     <fragment
         android:id="@+id/alertsFragment"
-        android:name="com.iti.java.weatheroo.alarms.AlertsFragment"
+        android:name="com.iti.java.weatheroo.alerts.view.AlertsFragment"
         android:label="fragment_alerts"
         tools:layout="@layout/fragment_alerts" />
     <fragment
@@ -25,4 +25,9 @@
         android:name="com.iti.java.weatheroo.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/addAlarmFragment"
+        android:name="com.iti.java.weatheroo.add_alarm.view.AddAlarmFragment"
+        android:label="fragment_add_alarm"
+        tools:layout="@layout/fragment_add_alarm" />
 </navigation>

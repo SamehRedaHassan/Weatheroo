@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="units">Units</string>
+    <string name="Add_Alarm">Add Alarm</string>
+    <string name="reason">what is the reason for the alarm ?</string>
+    <string name="startDate">Start Date</string>
+    <string name="endDate">End Date</string>
+    <string name="enable_dialog">Enable Dialog</string>
+    <string name="add_alert">Add</string>
 </resources>

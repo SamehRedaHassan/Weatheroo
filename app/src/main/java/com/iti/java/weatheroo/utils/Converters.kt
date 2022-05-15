@@ -140,4 +140,19 @@ class Converters {
         return UUID.fromString(string)
     }
 
+    @TypeConverter
+    fun fromListOfDatesToString(dateList: List<Date>?) : String{
+        val gson = Gson()
+        return gson.toJson(dateList)
+    }
+
+    @TypeConverter
+    fun fromStringToListOfDates(dateListString: String) : List<Date>?{
+        val gson = Gson()
+        return run {
+            var list = object : TypeToken<List<Date?>?>(){}.type
+            gson.fromJson(dateListString, list)
+        }
+    }
+
 }

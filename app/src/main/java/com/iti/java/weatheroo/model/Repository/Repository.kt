@@ -1,7 +1,7 @@
 package com.iti.java.weatheroo.model.Repository
 
 import androidx.lifecycle.LiveData
-import com.google.android.gms.maps.model.LatLng
+import com.iti.java.weatheroo.model.Alert
 import com.iti.java.weatheroo.model.FavouriteLocation
 import com.iti.java.weatheroo.model.WeatherResponse
 import retrofit2.Call
@@ -14,5 +14,9 @@ interface Repository {
     fun deleteFavouriteLocation(location: FavouriteLocation)
     fun getFavWeatherObj(id: UUID): FavouriteLocation?
     fun deleteHomeLocation()
+    fun getAllAlarms() : LiveData<List<Alert>>
+    fun deleteAlarm(alert: Alert?)
+    fun insertAlarm(alert: Alert?)
+    fun getAlarm(id: UUID?): Alert?
 
 }

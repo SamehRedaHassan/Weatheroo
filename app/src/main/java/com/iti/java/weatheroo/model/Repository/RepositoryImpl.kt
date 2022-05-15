@@ -2,7 +2,7 @@ package com.iti.java.weatheroo.model.Repository
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.google.android.gms.maps.model.LatLng
+import com.iti.java.weatheroo.model.Alert
 import com.iti.java.weatheroo.model.FavouriteLocation
 import com.iti.java.weatheroo.model.WeatherResponse
 import com.iti.java.weatheroo.model.network.RetrofitService
@@ -50,6 +50,22 @@ class RepositoryImpl(private val context: Context,
 
     override fun deleteHomeLocation() {
         localSource.deleteHomeLocation()
+    }
+
+    override fun getAllAlarms(): LiveData<List<Alert>> {
+       return localSource.getAllAlarms()
+    }
+
+    override fun deleteAlarm(alert: Alert?) {
+        localSource.deleteAlarm(alert)
+    }
+
+    override fun insertAlarm(alert: Alert?) {
+        localSource.insertAlarm(alert)
+    }
+
+    override fun getAlarm(id: UUID?): Alert? {
+        return localSource.getAlarm(id)
     }
 
 }
