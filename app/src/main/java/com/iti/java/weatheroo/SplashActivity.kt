@@ -8,9 +8,11 @@ import android.os.Bundle
 import android.view.WindowManager
 import com.airbnb.lottie.LottieAnimationView
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
+import android.net.ConnectivityManager
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -25,6 +27,7 @@ import com.iti.java.weatheroo.map.view.MapsActivity
 import com.iti.java.weatheroo.utils.Constants
 import com.iti.java.weatheroo.utils.Utils
 import com.google.android.gms.location.*
+import com.iti.java.weatheroo.model.network.NetworkConnectivityManager
 import com.iti.java.weatheroo.utils.WeatherLocationProvider
 
 
@@ -40,6 +43,7 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+        listenOnConnection()
         provider = WeatherLocationProvider(this)
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         lottieAnimationView = findViewById(R.id.lottie);
@@ -174,5 +178,11 @@ class SplashActivity : AppCompatActivity() {
     private fun navigateHome(){
         val homeActivity = Intent(this,MainActivity::class.java)
         startActivity(homeActivity)
+    }
+
+    private fun listenOnConnection() {
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
+        registerReceiver(NetworkConnectivityManager(), intentFilter)
     }
 }

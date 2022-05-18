@@ -18,5 +18,8 @@ interface Repository {
     fun deleteAlarm(myAlert: MyAlert?)
     fun insertAlarm(myAlert: MyAlert?)
     fun getAlarm(id: UUID?): MyAlert?
+    fun getWeatherList(): LiveData<List<WeatherResponse>>
+    fun deleteCurrentWeather(weatherObj: WeatherResponse?)
+    fun saveCurrentWeather(weatherObj: WeatherResponse?)
 
 }

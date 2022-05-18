@@ -21,6 +21,7 @@ import com.iti.java.weatheroo.home.view_model.HomeViewModelFactory
 import com.iti.java.weatheroo.model.CurrentWeatherModel
 import com.iti.java.weatheroo.model.DailyWeatherModel
 import com.iti.java.weatheroo.model.Repository.RepositoryImpl
+import com.iti.java.weatheroo.model.network.NetworkConnectivityManager
 import com.iti.java.weatheroo.model.network.RetrofitService
 import com.iti.java.weatheroo.model.room.LocalSource
 import com.iti.java.weatheroo.model.room.LocalSourceImpl
@@ -69,21 +70,38 @@ class HomeFragment : Fragment() {
         binding = null
     }
 
+    override fun onResume() {
+        super.onResume()
+        if(!(NetworkConnectivityManager.isConnected)){
+            viewModel.getLocalWeather().observe(viewLifecycleOwner, Observer {
+                if (it.size > 0 ){
+                    viewModel.currentWeather = it[0].current
+                    viewModel.hourly.postValue(it[0].hourly)
+                    viewModel.daily.postValue(it[0].daily)
+                    displayTemp()
+                 }
+            })
+            Utils.showNoConnectivitySnackbar(view!!,requireContext())
+        }else{
+            configureUI()
+            initData()
+        }
+    }
+
     private fun initData() {
-
-
         var job : Job? = null
         lifecycle.coroutineScope.launch {
             job = CoroutineScope(Dispatchers.IO).launch {
                 Log.i("UUU", "initData1: ")
                 viewModel.getCurrentWeather()
-                withContext(Dispatchers.Main){
-
-                    //adapter.notifyDataSetChanged()
-                }
+//                withContext(Dispatchers.Main){
+//
+//                    //adapter.notifyDataSetChanged()
+//                }
             }
         }
     }
+
 
 
     private fun configureUI() {
@@ -104,17 +122,7 @@ class HomeFragment : Fragment() {
         weeklyTemperatureRecyclerView.adapter = weeklyTemperatureAdapter
         viewModel.hourly.observe(this, Observer {
             Log.i("TAG", "onCreatttttte: $it")
-            Glide.with(requireContext()).load(Constants.ICON_BASE_URL +  viewModel.currentWeather.weather.get(0).icon + Constants.PNG) .into(binding!!.weatherImage)
-
-            binding!!.locationTextView.text = Utils.getCurrentCityFromLatLon(requireContext(),Utils.getCurrentLattitude(requireContext()),Utils.getCurrentLongitude(requireContext()))
-            binding!!.temperatureTextView.text = viewModel.currentWeather.temp.toString().subSequence(0,2).toString() + Utils.getCurrentTemperatureUnit(requireContext())
-            binding!!.statusTxtView.text = viewModel.currentWeather.weather.get(0).main
-            binding!!.windSpeedTextView.text = viewModel.currentWeather.windSpeed.toString() + Utils.getCurrentWindUnit(requireContext())
-            binding!!.humidityTxtView.text = viewModel.currentWeather.humidity.toString() + Utils.getCurrentHumidityUnit()
-            binding!!.PressureTxtView.text = viewModel.currentWeather.pressure.toString() +  Utils.getCurrentPressureUnit()
-
-
-
+            displayTemp()
             dailyTemperatureAdapter.setDailyWeather(it)
         })
         viewModel.daily.observe(this, Observer {
@@ -133,5 +141,15 @@ class HomeFragment : Fragment() {
         weeklyTemperatureAdapter.notifyDataSetChanged()
 
 
+    }
+    private fun displayTemp(){
+        Glide.with(requireContext()).load(Constants.ICON_BASE_URL +  viewModel.currentWeather.weather.get(0).icon + Constants.PNG) .into(binding!!.weatherImage)
+        binding!!.locationTextView.text = Utils.getCurrentCityFromLatLon(requireContext(),Utils.getCurrentLattitude(requireContext()),Utils.getCurrentLongitude(requireContext()))
+        binding!!.locationTextView.text = Utils.getCurrentCityFromLatLon(requireContext(),Utils.getCurrentLattitude(requireContext()),Utils.getCurrentLongitude(requireContext()))
+        binding!!.temperatureTextView.text = viewModel.currentWeather.temp.toString().subSequence(0,2).toString() + Utils.getCurrentTemperatureUnit(requireContext())
+        binding!!.statusTxtView.text = viewModel.currentWeather.weather.get(0).main
+        binding!!.windSpeedTextView.text = viewModel.currentWeather.windSpeed.toString() + Utils.getCurrentWindUnit(requireContext())
+        binding!!.humidityTxtView.text = viewModel.currentWeather.humidity.toString() + Utils.getCurrentHumidityUnit()
+        binding!!.PressureTxtView.text = viewModel.currentWeather.pressure.toString() +  Utils.getCurrentPressureUnit()
     }
 }

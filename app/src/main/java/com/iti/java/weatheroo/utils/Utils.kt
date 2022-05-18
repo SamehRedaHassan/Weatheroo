@@ -1,13 +1,18 @@
 package com.iti.java.weatheroo.utils
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.location.Address
 import android.location.Geocoder
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.provider.Settings
 import android.util.Log
+import android.view.View
+import androidx.core.content.ContextCompat.startActivity
+import com.google.android.material.snackbar.Snackbar
 import com.iti.java.weatheroo.R
 import java.io.IOException
 import java.text.DateFormat
@@ -380,7 +385,13 @@ class Utils {
            return dateFormat.format(d)
        }
 
-
+        fun showNoConnectivitySnackbar(view: View, context: Context ) {
+           val snack = Snackbar.make(view, "No Network", Snackbar.LENGTH_LONG) // replace root view with your view Id
+           snack.setAction("enable wifi") {
+               startActivity(context,Intent(Settings.ACTION_WIFI_SETTINGS),null)
+           }
+           snack.show()
+       }
 
 
 

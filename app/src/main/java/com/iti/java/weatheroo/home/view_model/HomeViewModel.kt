@@ -17,8 +17,8 @@ import java.lang.IllegalArgumentException
 class HomeViewModel(private val _irepo : Repository,val context: Context): ViewModel()  {
     lateinit var currentWeather : CurrentWeatherModel
 
-    val hourly = MutableLiveData<List<CurrentWeatherModel>>()
-    val daily = MutableLiveData<List<DailyWeatherModel>>()
+    var hourly = MutableLiveData<List<CurrentWeatherModel>>()
+    var daily = MutableLiveData<List<DailyWeatherModel>>()
 
     fun getCurrentWeather( )  {
         val response = _irepo.getWeatherForeCast(Utils.getCurrentLattitude(context),Utils.getCurrentLongitude(context))
@@ -29,12 +29,19 @@ class HomeViewModel(private val _irepo : Repository,val context: Context): ViewM
                 currentWeather = response.body()!!.current
                 hourly.postValue(response.body()!!.hourly)
                 daily.postValue(response.body()!!.daily)
+                var weatherObj = response.body()
+                weatherObj?.id = "id"
+                _irepo.saveCurrentWeather(weatherObj)
+
             }
 
             override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
             }
 
         })
+    }
+    fun getLocalWeather() :LiveData<List<WeatherResponse>> {
+        return  _irepo.getWeatherList()
     }
 
 }

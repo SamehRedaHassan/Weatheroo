@@ -97,8 +97,6 @@ class AddAlarmFragment : Fragment() {
 
 
     private fun configureUI() {
-
-        // binding?.alertTimeTxtView?.
         alarmTime.setOnClickListener {
 
             TimePickerDialog(

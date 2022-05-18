@@ -205,8 +205,6 @@ class WeatherCoroutineWorker(val context: Context, val params: WorkerParameters)
                 Utils.getCurrentLattitude(context),
                 Utils.getCurrentLongitude(context)
             )
-        //TODO: al time byb2a b 0 --> fal 7eta bta3at am w pm fal worker
-      //  val b = weatherObjOverNetwork
         response.enqueue(object : Callback<WeatherResponse> {
             override fun onResponse(
                 call: Call<WeatherResponse>,

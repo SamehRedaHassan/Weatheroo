@@ -2,9 +2,7 @@ package com.iti.java.weatheroo.model.room
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.iti.java.weatheroo.model.MyAlert
-import com.iti.java.weatheroo.model.AlertDao
-import com.iti.java.weatheroo.model.FavouriteLocation
+import com.iti.java.weatheroo.model.*
 import com.iti.java.weatheroo.model.database_layer.DatabaseLayer
 import com.iti.java.weatheroo.utils.FavouritesDao
 import java.util.*
@@ -12,16 +10,18 @@ import java.util.*
 class LocalSourceImpl(context : Context) : LocalSource {
 
     //vars
-    private var favDao: FavouritesDao?
-    // private var homeWeatherObjDao : HomeWeatherDao? = null
+     private var favDao: FavouritesDao?
+     private var weatherDao : WeatherDao?
      private var alertDao : AlertDao?
-    //  override val allStoredAlarms: LiveData<List<Alarm>>
+     // override val allStoredAlarms: LiveData<List<Alert>>
 
 
     init {
         val db: DatabaseLayer = DatabaseLayer.getDBInstance(context)
         favDao = db.favouriteDao()
         alertDao = db.alertDao()
+        weatherDao = db.weatherDao()
+
     }
 
     override fun getAllFavouriteLocations(): LiveData<List<FavouriteLocation>> {
@@ -59,6 +59,18 @@ class LocalSourceImpl(context : Context) : LocalSource {
 
     override fun getAlarm(id: UUID?): MyAlert? {
        return alertDao?.getAlarm(id)
+    }
+
+    override fun getWeatherList(): LiveData<List<WeatherResponse>> {
+        return weatherDao?.getWeatherList()!!
+    }
+
+    override fun deleteCurrentWeather(weatherObj: WeatherResponse?) {
+        weatherDao?.deleteCurrentWeather(weatherObj)
+    }
+
+    override fun saveCurrentWeather(weatherObj: WeatherResponse?) {
+       weatherDao?.saveCurrentWeather(weatherObj)
     }
 
 

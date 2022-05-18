@@ -10,6 +10,7 @@ import com.iti.java.weatheroo.model.WeatherResponse
 import com.iti.java.weatheroo.model.network.RetrofitService
 import com.iti.java.weatheroo.model.room.LocalSource
 import com.iti.java.weatheroo.utils.Constants
+import com.iti.java.weatheroo.utils.Utils
 import com.iti.java.weatheroo.utils.worker.WeatherCoroutineWorker
 import retrofit2.Call
 import java.util.*
@@ -32,7 +33,7 @@ class RepositoryImpl(private val context: Context,
     }
 
     override fun getWeatherForeCast(lat: Double, Lon: Double): Call<WeatherResponse> {
-        return retrofitService.getWeather(lat,Lon,APP_ID,"metric","en")
+        return retrofitService.getWeather(lat,Lon,APP_ID, Utils.getCurrentTemperatureUnit(context),Utils.getCurrentLang(context))
     }
 
     override fun getAllFavouriteLocations(): LiveData<List<FavouriteLocation>> {
@@ -88,6 +89,18 @@ class RepositoryImpl(private val context: Context,
 
     override fun getAlarm(id: UUID?): MyAlert? {
         return localSource.getAlarm(id)
+    }
+
+    override fun getWeatherList(): LiveData<List<WeatherResponse>> {
+        return localSource.getWeatherList()
+    }
+
+    override fun deleteCurrentWeather(weatherObj: WeatherResponse?) {
+        return localSource.deleteCurrentWeather(weatherObj)
+    }
+
+    override fun saveCurrentWeather(weatherObj: WeatherResponse?) {
+        return localSource.saveCurrentWeather(weatherObj)
     }
 
 }
