@@ -38,7 +38,6 @@ import com.iti.java.weatheroo.model.room.LocalSourceImpl
 import com.iti.java.weatheroo.utils.Constants
 import com.iti.java.weatheroo.utils.Utils
 import com.iti.java.weatheroo.utils.Utils.Utils.getDate
-import com.iti.java.weatheroo.utils.Utils.Utils.truncateToHours
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -68,8 +67,9 @@ class WeatherCoroutineWorker(val context: Context, val params: WorkerParameters)
         val alert = repo.getAlarm(UUID.fromString(id))
 
         if (alert == null) {
+            Log.e("Work", "doWork: Null alert", )
         } else if (alert?.typeBool == true) {
-            Log.e("sameh", "doWork:  Iam true")
+            Log.e("Work", "doWork:  Iam true")
             val msg = getAlertsFromApi(id!!)
                 if (Settings.canDrawOverlays(context)) {
                     GlobalScope.launch(Dispatchers.Main) {
@@ -79,20 +79,21 @@ class WeatherCoroutineWorker(val context: Context, val params: WorkerParameters)
             } else {
                 displayNotification(cnt.toString(), "ALERT", msg)
             }
-            fireNextAlert(alert)
+            enableNextAlarm(alert)
         } else {
             Log.e("sameh", "doWork:  Iam false")
 
-            fireNextAlert(alert)
+            enableNextAlarm(alert)
         }
         return Result.success()
     }
 
-    private fun fireNextAlert(myAlert: MyAlert) {
-        if (Utils.isTodayInRange(myAlert?.startDate!!.getDate(), myAlert.endDate.getDate())) {
+    private fun enableNextAlarm(myAlert: MyAlert) {
+      //  if (Utils.isTodayInRange(myAlert?.startDate!!.getDate(), myAlert.endDate.getDate())) {
             val calender = Calendar.getInstance()
             val currentDate = Date(calender.timeInMillis)
             calender.add(Calendar.DATE, 1)
+        if(calender.time.before(Date(myAlert.endDate))){
             val nextTimeDelay = calender.timeInMillis - currentDate.time
             val nextRequest = OneTimeWorkRequestBuilder<WeatherCoroutineWorker>()
                 .setInputData(
@@ -101,6 +102,7 @@ class WeatherCoroutineWorker(val context: Context, val params: WorkerParameters)
                 .setInitialDelay(nextTimeDelay, TimeUnit.MILLISECONDS).build()
             WorkManager.getInstance(context)
                 .enqueueUniqueWork(myAlert?.id.toString(), ExistingWorkPolicy.REPLACE, nextRequest)
+    //    }
         }
     }
 

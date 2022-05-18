@@ -30,25 +30,27 @@ class AddAlarmFragment : Fragment() {
     private val myCalendar = Calendar.getInstance()
     private lateinit var navController: NavController
     private lateinit var viewModel: AlertsViewModel
-    lateinit var startDateTxtView : EditText
-    lateinit var endDateTxtView : EditText
-    lateinit var alarmTime : EditText
-    lateinit var reasonText : EditText
-    lateinit var switch : Switch
-    lateinit var addBtn : MaterialButton
-    var alertTime :Long = 0
-    var startDate :Long = 0
-    var endDate :Long = 0
+    lateinit var startDateTxtView: EditText
+    lateinit var endDateTxtView: EditText
+    lateinit var alarmTime: EditText
+    lateinit var reasonText: EditText
+    lateinit var switch: Switch
+    lateinit var addBtn: MaterialButton
+    var alertTime: Long = 0
+    var startDate: Long = 0
+    var endDate: Long = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel =  ViewModelProvider(
+        viewModel = ViewModelProvider(
             this,
             AlertsViewModelFactory(
-                RepositoryImpl(requireContext(), RetrofitService.getInstance(),
+                RepositoryImpl(
+                    requireContext(), RetrofitService.getInstance(),
                     LocalSourceImpl(requireContext())
-                ),requireContext())
+                ), requireContext()
+            )
         ).get(AlertsViewModel::class.java)
 
     }
@@ -57,12 +59,14 @@ class AddAlarmFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel =  ViewModelProvider(
+        viewModel = ViewModelProvider(
             this,
             AlertsViewModelFactory(
-                RepositoryImpl(requireContext(), RetrofitService.getInstance(),
+                RepositoryImpl(
+                    requireContext(), RetrofitService.getInstance(),
                     LocalSourceImpl(requireContext())
-                ),requireContext())
+                ), requireContext()
+            )
         ).get(AlertsViewModel::class.java)
         binding = FragmentAddAlarmBinding.inflate(inflater, container, false)
         return inflater.inflate(R.layout.fragment_add_alarm, container, false)
@@ -95,16 +99,20 @@ class AddAlarmFragment : Fragment() {
     private fun configureUI() {
 
         // binding?.alertTimeTxtView?.
-        alarmTime.setOnClickListener{
+        alarmTime.setOnClickListener {
 
             TimePickerDialog(
                 requireContext(),
                 12,
-                TimePickerDialog.OnTimeSetListener{viewTimePicker, hour, minute  ->
+                TimePickerDialog.OnTimeSetListener { viewTimePicker, hour, minute ->
                     alertTime = timeToSeconds(hour, minute)
                     alarmTime.setText("$hour:$minute")
+                    val calendar = Calendar.getInstance()
+                    calendar.set(Calendar.HOUR_OF_DAY ,hour)
+                    calendar.set(Calendar.MINUTE ,minute)
+                    alertTime = calendar.timeInMillis
                 },
-                0,0,
+                0, 0,
                 true
             ).show()
         }
@@ -112,14 +120,18 @@ class AddAlarmFragment : Fragment() {
         startDateTxtView.setOnClickListener {
             DatePickerDialog(
                 requireContext(),
-                DatePickerDialog.OnDateSetListener{_: DatePicker?, year: Int, monthOfYear: Int, dayOfMonth: Int ->
+                DatePickerDialog.OnDateSetListener { _: DatePicker?, year: Int, monthOfYear: Int, dayOfMonth: Int ->
 
                     var startDateSt = dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year
-                        startDate = dateToLong(startDateSt)
+                    startDate = dateToLong(startDateSt)
                     startDateTxtView.setText(startDateSt)
+                    val calendar = Calendar.getInstance()
+                    calendar.set(Calendar.YEAR ,year)
+                    calendar.set(Calendar.MONTH ,monthOfYear)
+                    calendar.set(Calendar.DAY_OF_MONTH ,dayOfMonth)
+                    startDate = calendar.timeInMillis
 
-
-                                                  },
+                },
                 myCalendar.get(Calendar.YEAR),
                 myCalendar.get(Calendar.MONTH),
                 myCalendar.get(
@@ -132,11 +144,17 @@ class AddAlarmFragment : Fragment() {
         endDateTxtView.setOnClickListener {
             DatePickerDialog(
                 requireContext(),
-                DatePickerDialog.OnDateSetListener{ d_: DatePicker?, year: Int, monthOfYear: Int, dayOfMonth: Int ->
+                DatePickerDialog.OnDateSetListener { d_: DatePicker?, year: Int, monthOfYear: Int, dayOfMonth: Int ->
 
                     var endDateSt = dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year
                     endDate = dateToLong(endDateSt)
-                    endDateTxtView.setText(endDateSt) },
+                    endDateTxtView.setText(endDateSt)
+                    val calendar = Calendar.getInstance()
+                    calendar.set(Calendar.YEAR ,year)
+                    calendar.set(Calendar.MONTH ,monthOfYear)
+                    calendar.set(Calendar.DAY_OF_MONTH ,dayOfMonth)
+                    endDate = calendar.timeInMillis
+                },
                 myCalendar.get(Calendar.YEAR),
                 myCalendar.get(Calendar.MONTH),
                 myCalendar.get(
@@ -145,8 +163,9 @@ class AddAlarmFragment : Fragment() {
             ).show()
         }
 
-        addBtn.setOnClickListener{
-            val alertObj = MyAlert(startDate,endDate,alertTime,switch.isChecked,reasonText.text.toString())
+        addBtn.setOnClickListener {
+            val alertObj =
+                MyAlert(startDate, endDate, alertTime, switch.isChecked, reasonText.text.toString())
             viewModel.addAlarm(alertObj)
             Toast.makeText(requireContext(), "added Successfully", Toast.LENGTH_SHORT).show()
             navController.popBackStack()
@@ -155,8 +174,9 @@ class AddAlarmFragment : Fragment() {
     }
 
     fun timeToSeconds(hour: Int, min: Int): Long {
-        return (((hour * 60 + min) * 60) - 7200 ).toLong()
+        return (((hour * 60 + min) * 60) - 7200).toLong()
     }
+
     fun dateToLong(date: String?): Long {
         val f = SimpleDateFormat("dd-MM-yyyy")
         var milliseconds: Long = 0
@@ -166,6 +186,6 @@ class AddAlarmFragment : Fragment() {
         } catch (e: ParseException) {
             e.printStackTrace()
         }
-        return milliseconds/1000
+        return milliseconds / 1000
     }
 }

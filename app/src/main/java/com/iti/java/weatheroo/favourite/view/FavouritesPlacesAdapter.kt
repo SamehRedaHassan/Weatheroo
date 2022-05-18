@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.Navigation
@@ -20,6 +21,7 @@ class FavouritesPlacesAdapter (val context: Context, var data: List<FavouriteLoc
 
     class FavouritePlaceViewHolder(var layout: View) : RecyclerView.ViewHolder(layout) {
         var placeTextView: TextView = itemView.findViewById(R.id.favouritePlaceTxtView)
+        var deleteFavBtn : Button   = itemView.findViewById(R.id.deleteFavButtonBtn)
 
     }
 
@@ -33,6 +35,9 @@ class FavouritesPlacesAdapter (val context: Context, var data: List<FavouriteLoc
 
     override fun onBindViewHolder(holder: FavouritePlaceViewHolder, position: Int) {
         holder.placeTextView.setText(data.get(position).name)
+        holder.deleteFavBtn.setOnClickListener{
+            delgate.deleteFav(data.get(position))
+        }
         holder.layout.setOnClickListener(View.OnClickListener {
             Utils.setCurrentLatitude(context,data.get(position).latitude.toString())
             Utils.setCurrentLongitude(context,data.get(position).longitude.toString())

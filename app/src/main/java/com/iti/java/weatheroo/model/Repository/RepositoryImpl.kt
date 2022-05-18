@@ -1,6 +1,7 @@
 package com.iti.java.weatheroo.model.Repository
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.work.*
 import com.iti.java.weatheroo.model.MyAlert
@@ -9,8 +10,6 @@ import com.iti.java.weatheroo.model.WeatherResponse
 import com.iti.java.weatheroo.model.network.RetrofitService
 import com.iti.java.weatheroo.model.room.LocalSource
 import com.iti.java.weatheroo.utils.Constants
-import com.iti.java.weatheroo.utils.Utils.Utils.truncateToDate
-import com.iti.java.weatheroo.utils.Utils.Utils.truncateToHours
 import com.iti.java.weatheroo.utils.worker.WeatherCoroutineWorker
 import retrofit2.Call
 import java.util.*
@@ -66,11 +65,15 @@ class RepositoryImpl(private val context: Context,
     }
 
     override fun insertAlarm(myAlert: MyAlert?) {
-        val nowCalender = Calendar.getInstance().apply { timeInMillis = myAlert?.alertTime!! }
-        val nextCalender = Calendar.getInstance()
-        nextCalender[Calendar.MINUTE] = nowCalender[Calendar.MINUTE]
-        nextCalender[Calendar.HOUR_OF_DAY] = nowCalender[Calendar.HOUR_OF_DAY]
-        val delay = nextCalender.timeInMillis - Date(System.currentTimeMillis()).time
+        val nowCalendar = Calendar.getInstance().apply { time = Date(System.currentTimeMillis()) }
+        val initialCalender = Calendar.getInstance().apply { timeInMillis = myAlert?.alertTime?:0 }
+        val startCalendar = Calendar.getInstance().apply { time = Date(myAlert?.startDate?:0) }
+        nowCalendar.set(Calendar.YEAR,startCalendar[Calendar.YEAR])
+        nowCalendar.set(Calendar.MONTH,startCalendar[Calendar.MONTH])
+        nowCalendar.set(Calendar.DAY_OF_MONTH,startCalendar[Calendar.DAY_OF_MONTH])
+        nowCalendar.set(Calendar.MINUTE,initialCalender[Calendar.MINUTE])
+        nowCalendar.set(Calendar.HOUR_OF_DAY,initialCalender[Calendar.HOUR_OF_DAY])
+        val delay = nowCalendar.timeInMillis - Date(System.currentTimeMillis()).time
             val newRequest = OneTimeWorkRequestBuilder<WeatherCoroutineWorker>()
                 .setInputData(
                     Data.Builder().putString(Constants.UUID_KEY, myAlert?.id.toString()).build()
@@ -78,7 +81,7 @@ class RepositoryImpl(private val context: Context,
                 .setInitialDelay(delay, TimeUnit.MILLISECONDS).build()
             WorkManager.getInstance(context)
                 .enqueueUniqueWork(myAlert?.id.toString(), ExistingWorkPolicy.REPLACE, newRequest)
-
+        Log.e("DElay", "insertAlarm: "+delay, )
         localSource.insertAlarm(myAlert)
 
     }

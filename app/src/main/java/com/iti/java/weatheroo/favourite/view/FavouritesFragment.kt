@@ -119,7 +119,6 @@ class FavouritesFragment : Fragment() , NavigationDelegate {
 
         val mGridLayoutManager: GridLayoutManager
 // ...
-// ...
         mGridLayoutManager = GridLayoutManager(activity, 2)
 
         val manager: RecyclerView.LayoutManager = mGridLayoutManager
@@ -133,12 +132,14 @@ class FavouritesFragment : Fragment() , NavigationDelegate {
             myIntent.putExtra(Constants.SOURCE_FRAGMENT, Constants.FAVOURITES) //Optional parameters
             context?.startActivity(myIntent)
         }
-
-
     }
 
     override fun navigateToHome() {
         navController.navigate(R.id.homeFragment)
+    }
+
+    override fun deleteFav(location: FavouriteLocation) {
+        favViewModel.deleteFavourite(location)
     }
 
 
