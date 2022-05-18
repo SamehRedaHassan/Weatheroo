@@ -4,19 +4,21 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.iti.java.weatheroo.R
-import com.iti.java.weatheroo.model.Alert
+import com.iti.java.weatheroo.alerts.view_model.DeleteDelegate
+import com.iti.java.weatheroo.model.MyAlert
+import com.iti.java.weatheroo.utils.Utils
 
-class AlertsAdapter (val context: Context, var data: List<Alert>) :
+class AlertsAdapter (val context: Context, var data: List<MyAlert> , val alertDeleteDelegate: DeleteDelegate) :
     RecyclerView.Adapter<AlertsAdapter.AlertViewHolder>(){
 
     class AlertViewHolder(var layout: View) : RecyclerView.ViewHolder(layout) {
         var startTimeTxtView: TextView = itemView.findViewById(R.id.startTimeTxtView)
-        var startDateTxtView: TextView = itemView.findViewById(R.id.startDateTxtView)
         var endTimeTxtView: TextView = itemView.findViewById(R.id.endTimeTxtView)
-        var endDateTxtView: TextView = itemView.findViewById(R.id.endDateTxtView)
+        var deleteBtn : Button   = itemView.findViewById(R.id.deleteBtn)
     }
 
     override fun onCreateViewHolder(recyclerView: ViewGroup, viewType: Int): AlertViewHolder {
@@ -28,10 +30,11 @@ class AlertsAdapter (val context: Context, var data: List<Alert>) :
     }
 
     override fun onBindViewHolder(holder: AlertViewHolder, position: Int) {
-        holder.startTimeTxtView.setText(data.get(position).startDate.toString())
-    //    holder.startDateTxtView.setText(data.get(position).alertTime.toString())
-        holder.endTimeTxtView.setText(data.get(position).endDate.toString())
-    //    holder.endDateTxtView.setText(data.get(position).alertTime.toString())
+        holder.startTimeTxtView. setText(  Utils.longToDateAsString(data.get(position).startDate , Utils.getCurrentLang(context)))
+        holder.endTimeTxtView.setText(  Utils.longToDateAsString(data.get(position).endDate , Utils.getCurrentLang(context)))
+        holder.deleteBtn.setOnClickListener{
+            alertDeleteDelegate.deleteAlarm(data.get(position))
+        }
     }
 
     override fun getItemCount(): Int {

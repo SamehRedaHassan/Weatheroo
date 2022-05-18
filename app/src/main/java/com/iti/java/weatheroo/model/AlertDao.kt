@@ -9,19 +9,19 @@ interface AlertDao {
 //    @get:Query("SELECT * FROM Alarm")
 //    val getAllAlarms: LiveData<List<Alarm>>
 
-    @Query("SELECT * FROM Alert")
-    fun getAllAlarms() : LiveData<List<Alert>>
+    @Query("SELECT * FROM MyAlert")
+    fun getAllAlarms() : LiveData<List<MyAlert>>
 
     @Delete
-    fun deleteAlarm(alert: Alert?)
+    fun deleteAlarm(myAlert: MyAlert?)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAlarm(alert: Alert?)
+    fun insertAlarm(myAlert: MyAlert?)
 
 //    @Update
 //    fun updateAlarm(alarm: Alarm?)
 
-    @Query("SELECT * FROM Alert WHERE id LIKE :id")
-    fun getAlarm(id: UUID?): Alert?
+    @Query("SELECT * FROM MyAlert WHERE id LIKE :id")
+    fun getAlarm(id: UUID?): MyAlert?
 }
 

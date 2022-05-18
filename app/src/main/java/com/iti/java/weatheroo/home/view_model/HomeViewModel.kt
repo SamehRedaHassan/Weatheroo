@@ -29,17 +29,9 @@ class HomeViewModel(private val _irepo : Repository,val context: Context): ViewM
                 currentWeather = response.body()!!.current
                 hourly.postValue(response.body()!!.hourly)
                 daily.postValue(response.body()!!.daily)
-//                if(){
-//                    val favObj = FavouriteLocation(response.body()!!.lat,response.body()!!.lon,response.body()!!.timezone)
-//                    _irepo.addFavouriteLocation(favObj)
-//                }
-
-                Log.i("QQQQQQQQ", "onResponse: " + response.body())
-
             }
 
             override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
-                Log.i("FFFFFF", "onResponse: " )
             }
 
         })

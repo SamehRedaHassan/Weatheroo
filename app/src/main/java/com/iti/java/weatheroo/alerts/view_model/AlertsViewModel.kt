@@ -4,27 +4,27 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.iti.java.weatheroo.model.Alert
+import com.iti.java.weatheroo.model.MyAlert
 import com.iti.java.weatheroo.model.Repository.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class AlertsViewModel (private val _irepo : Repository, val context: Context): ViewModel(){
+class AlertsViewModel (private val _irepo : Repository, val context: Context ): ViewModel(){
 
 
-    fun getAlarms() : LiveData<List<Alert>> {
+    fun getAlarms() : LiveData<List<MyAlert>> {
         return _irepo.getAllAlarms()
     }
 
-    fun deleteAlarm(alert : Alert){
+    fun deleteAlarm(myAlert : MyAlert){
         viewModelScope.launch(Dispatchers.IO){
-            _irepo.deleteAlarm(alert)
+            _irepo.deleteAlarm(myAlert)
         }
     }
 
-    fun addAlarm(alert : Alert){
+    fun addAlarm(myAlert : MyAlert){
         viewModelScope.launch(Dispatchers.IO){
-            _irepo.insertAlarm(alert)
+            _irepo.insertAlarm(myAlert)
         }
     }
 }

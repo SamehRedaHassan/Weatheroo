@@ -10,13 +10,14 @@ import android.os.Build
 import android.util.Log
 import com.iti.java.weatheroo.R
 import java.io.IOException
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 class Constants {
     companion object Constants{
-        const val ICON_BASE_URL      = "http://openweathermap.org/img/w/"
+        const val ICON_BASE_URL      = "https://openweathermap.org/img/w/"
         const val PNG                = ".png"
         const val Shared_Preferences = "WeatherSharedPreferences"
         const val LATITUDE           = "LATITUDE"
@@ -36,6 +37,7 @@ class Constants {
         const val Arabic_LANGUAGE    = "ar"
         const val IS_USING_GPS       = "IS_USING_GPS"
         const val IS_FIRST_LAUNCH    = "IS_FIRST_LAUNCH"
+        const val UUID_KEY           = "UUID_KEY"
     }
 }
 
@@ -43,6 +45,21 @@ class Constants {
 
 class Utils {
    companion object Utils {
+
+
+       fun getIsFirstTimeForAddAlarm(context: Context) : Boolean{
+           val sharedPreference = context.getSharedPreferences("myAppSHaredPrefs", Context.MODE_PRIVATE)
+           return sharedPreference.getBoolean("isFirstTimeAdd",true)
+       }
+
+       fun setIsFirstTimeAddAlarm(context: Context , isFirstTime : Boolean){
+           val sharedPreference = context.getSharedPreferences("myAppSHaredPrefs", Context.MODE_PRIVATE)
+           var editor = sharedPreference.edit()
+           editor.putBoolean("isFirstTimeAdd", isFirstTime)
+           editor.apply()
+       }
+
+
 
        fun saveCurrentLang(language: String , context :Context){
            val sharedPreference = context.getSharedPreferences(Constants.Shared_Preferences, Context.MODE_PRIVATE)
@@ -292,6 +309,82 @@ class Utils {
                context.resources.configuration.locale
            }
        }
+
+
+
+//       fun Date.getDateHomeStyleString(): String {
+//           val dayOfTheWeek = DateFormat.format("EEEE", this) as String // Thursday
+//
+//           val day = DateFormat.format("dd", this) as String // 20
+//
+//           val monthString = DateFormat.format("MMM", this) as String // Jun
+//
+//           return "$dayOfTheWeek, $day $monthString"
+//       }
+
+
+       fun isTodayInRange(start: Date?, end: Date?): Boolean {
+           return getTodayDate().isInRange(
+               start,
+               end)
+       }
+
+       fun Long.getDate(): Date {
+           return Date(this)
+       }
+
+       fun Long.getCalender(): Calendar {
+           return Calendar.getInstance().apply { timeInMillis = this@getCalender}
+       }
+
+       fun Date.isInRange(start: Date?, end: Date?): Boolean {
+           return this.before(end) && this.after(start)
+       }
+
+       fun getTodayDate(): Date {
+           val c = Calendar.getInstance()
+
+           // set the calendar to start of today
+           c[Calendar.HOUR_OF_DAY] = 0
+           c[Calendar.MINUTE] = 0
+           c[Calendar.SECOND] = 0
+           c[Calendar.MILLISECOND] = 0
+
+           // and get that as a Date
+           return c.time
+       }
+
+       fun Long.truncateToDate(): Long {
+           val cal = Calendar.getInstance() // locale-specific
+           cal.timeInMillis = this
+           cal[Calendar.HOUR_OF_DAY] = 0
+           cal[Calendar.MINUTE] = 0
+           cal[Calendar.SECOND] = 0
+           cal[Calendar.MILLISECOND] = 0
+           return cal.timeInMillis
+       }
+
+       fun Long.truncateToHours(): Long {
+           val cal = Calendar.getInstance() // locale-specific
+           cal.timeInMillis = this
+           cal[Calendar.YEAR] = 0
+           cal[Calendar.MONTH] = 0
+           cal[Calendar.DAY_OF_WEEK] = 0
+           cal[Calendar.DAY_OF_MONTH] = 0
+           return cal.timeInMillis
+       }
+
+       fun longToDateAsString(dateInMillis: Long, language: String): String {
+           val d = Date(dateInMillis * 1000)
+           val dateFormat: DateFormat = SimpleDateFormat("d MMM, yyyy",  Locale(language))
+           return dateFormat.format(d)
+       }
+
+
+
+
+
+
 
 //       fun getCityText(context: Context, lat: Double, lon: Double, language: String): String {
 //           var city = "Unknown!"

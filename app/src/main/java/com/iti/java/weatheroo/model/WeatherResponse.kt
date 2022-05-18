@@ -9,5 +9,6 @@ data class WeatherResponse (
     val timezoneOffset: Long,
     val current: CurrentWeatherModel,
     val hourly: List<CurrentWeatherModel>,//48
-    val daily: List<DailyWeatherModel>//8
+    val daily: List<DailyWeatherModel>,//8
+    var alerts : List<Alert>? =  listOf<Alert>()
 ):Serializable

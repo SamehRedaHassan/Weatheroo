@@ -2,7 +2,7 @@ package com.iti.java.weatheroo.model.room
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.iti.java.weatheroo.model.Alert
+import com.iti.java.weatheroo.model.MyAlert
 import com.iti.java.weatheroo.model.AlertDao
 import com.iti.java.weatheroo.model.FavouriteLocation
 import com.iti.java.weatheroo.model.database_layer.DatabaseLayer
@@ -44,20 +44,20 @@ class LocalSourceImpl(context : Context) : LocalSource {
         favDao?.deleteHomeLocation()
     }
 
-    override fun getAllAlarms(): LiveData<List<Alert>> {
+    override fun getAllAlarms(): LiveData<List<MyAlert>> {
       return  alertDao!!.getAllAlarms()
     }
 
-    override fun deleteAlarm(alert: Alert?) {
-        alertDao?.deleteAlarm(alert)
+    override fun deleteAlarm(myAlert: MyAlert?) {
+        alertDao?.deleteAlarm(myAlert)
     }
 
-    override fun insertAlarm(alert: Alert?) {
-        alertDao?.insertAlarm(alert)
+    override fun insertAlarm(myAlert: MyAlert?) {
+        alertDao?.insertAlarm(myAlert)
 
     }
 
-    override fun getAlarm(id: UUID?): Alert? {
+    override fun getAlarm(id: UUID?): MyAlert? {
        return alertDao?.getAlarm(id)
     }
 

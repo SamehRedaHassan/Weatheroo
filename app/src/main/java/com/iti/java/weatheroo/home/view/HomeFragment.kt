@@ -35,15 +35,12 @@ class HomeFragment : Fragment() {
     var binding: FragmentHomeBinding? = null
     lateinit var viewModel: HomeViewModel
     private val retrofitService = RetrofitService.getInstance()
-
     private lateinit var dailyLayoutManager: LinearLayoutManager
     private lateinit var weekelyLayoutManager: LinearLayoutManager
-
     private lateinit var dailyTemperatureRecyclerView: RecyclerView
     private lateinit var weeklyTemperatureRecyclerView: RecyclerView
     private lateinit var dailyTemperatureAdapter: DailyTemperatureAdapter
     private lateinit var weeklyTemperatureAdapter: WeeklyTemperatureAdapter
-   // private lateinit var navController: NavController
     var hourlyPredictions: List<CurrentWeatherModel> = ArrayList<CurrentWeatherModel>()
     var dailyPredictions: List<DailyWeatherModel> = ArrayList<DailyWeatherModel>()
 
@@ -57,7 +54,6 @@ class HomeFragment : Fragment() {
     ): View? {
                binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-  //      navController = findNavController(activity!!, R.id.frag)
        return binding!!.root
     }
 

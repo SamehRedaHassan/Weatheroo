@@ -60,9 +60,6 @@ class FavouritesFragment : Fragment() , NavigationDelegate {
 
     override fun onResume() {
         super.onResume()
-
-        Toast.makeText(requireContext() , "Swipe to delete From Favourite" , Toast.LENGTH_SHORT).show()
-
         favouritesPlacesAdapter.notifyDataSetChanged()
 //        if(!(NetworkChangeReceiver.isThereInternetConnection)){
 //            Log.e(

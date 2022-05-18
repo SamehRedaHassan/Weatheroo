@@ -16,11 +16,10 @@ import com.iti.java.weatheroo.R
 import com.iti.java.weatheroo.alerts.view_model.AlertsViewModel
 import com.iti.java.weatheroo.alerts.view_model.AlertsViewModelFactory
 import com.iti.java.weatheroo.databinding.FragmentAddAlarmBinding
-import com.iti.java.weatheroo.model.Alert
+import com.iti.java.weatheroo.model.MyAlert
 import com.iti.java.weatheroo.model.Repository.RepositoryImpl
 import com.iti.java.weatheroo.model.network.RetrofitService
 import com.iti.java.weatheroo.model.room.LocalSourceImpl
-import kotlinx.android.synthetic.main.hourly_cell.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -147,7 +146,7 @@ class AddAlarmFragment : Fragment() {
         }
 
         addBtn.setOnClickListener{
-            val alertObj = Alert(startDate,endDate,alertTime,switch.isChecked,reasonText.text.toString())
+            val alertObj = MyAlert(startDate,endDate,alertTime,switch.isChecked,reasonText.text.toString())
             viewModel.addAlarm(alertObj)
             Toast.makeText(requireContext(), "added Successfully", Toast.LENGTH_SHORT).show()
             navController.popBackStack()
