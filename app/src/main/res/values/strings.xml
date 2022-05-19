@@ -26,4 +26,21 @@
     <string name="requestPosition">how do you want to configure location ?</string>
     <string name="cancelPositionRequest">Cancel</string>
     <string name="approvePositionRequest">Let\'s Go</string>
+    <string name="homeButtonNav">Home</string>
+    <string name="favouriteButtomNav">Favourites</string>
+    <string name="alertsButtonNav">Alerts</string>
+    <string name="settingsButtomNav">Settings</string>
+    <string name="todayLabel">Today</string>
+    <string name="nextWeekLabel">NextWeek</string>
+    <string name="alarm_time">Alarm Time</string>
+    <string name="locationLabel">Location</string>
+    <string name="languageLabel">Language</string>
+    <string name="arabicLang">Arabic</string>
+    <string name="mapLabel">Map</string>
+    <string name="gpsLabel">GPS</string>
+    <string name="unitsLabel">Units</string>
+    <string name="imperial">imperial    (tem in F and wind  in m/h)</string>
+    <string name="standardLabel">standard    (tem in K and wind  in m/s)</string>
+    <string name="metricUnit">metric    (tem in C and wind  in m/s)</string>
+    <string name="saveBtnValue">Save</string>
 </resources>

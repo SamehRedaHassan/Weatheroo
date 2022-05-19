@@ -61,7 +61,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_margin="4dp"
                                     android:gravity="center"
-                                    android:text="Location"
+                                    android:text="@string/locationLabel"
                                     android:textColor="@color/midnightblue"
                                     android:textSize="16sp" />
                             </LinearLayout>
@@ -95,7 +95,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="16dp"
                                         android:checked="true"
-                                        android:text="GPS"
+                                        android:text="@string/gpsLabel"
                                         android:textColor="@color/midnightblue"
                                         android:textSize="12sp" />
 
@@ -104,7 +104,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="16dp"
-                                        android:text="Map"
+                                        android:text="@string/mapLabel"
                                         android:textColor="@color/midnightblue"
                                         android:textSize="12sp" />
                                 </RadioGroup>
@@ -140,7 +140,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_margin="4dp"
                                     android:gravity="center"
-                                    android:text="Language"
+                                    android:text="@string/languageLabel"
                                     android:textColor="@color/midnightblue"
                                     android:textSize="16sp" />
                             </LinearLayout>
@@ -183,7 +183,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="16dp"
-                                        android:text="Arabic"
+                                        android:text="@string/arabicLang"
                                         android:textColor="@color/midnightblue"
                                         android:textSize="12sp" />
                                 </RadioGroup>
@@ -230,7 +230,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_margin="4dp"
                                     android:gravity="center"
-                                    android:text="@string/units"
+                                    android:text="@string/unitsLabel"
                                     android:textColor="@color/midnightblue"
                                     android:textSize="16sp" />
                             </LinearLayout>
@@ -263,7 +263,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="16dp"
-                                        android:text="imperial    (tem in F and wind  in m/h)"
+                                        android:text="@string/imperial"
                                         android:textColor="@color/midnightblue"
                                         android:textSize="12sp" />
 
@@ -272,7 +272,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="16dp"
-                                        android:text="standard    (tem in K and wind  in m/s)"
+                                        android:text="@string/standardLabel"
                                         android:textColor="@color/midnightblue"
                                         android:textSize="12sp" />
 
@@ -282,7 +282,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="16dp"
                                         android:checked="true"
-                                        android:text="metric    (tem in C and wind  in m/s)"
+                                        android:text="@string/metricUnit"
                                         android:textColor="@color/midnightblue"
                                         android:textSize="12sp" />
                                 </RadioGroup>
@@ -305,7 +305,7 @@
             android:layout_gravity="center"
             android:layout_marginBottom="4dp"
             android:backgroundTint="@color/design_default_color_primary_dark"
-            android:text="@string/saveBtn"
+            android:text="@string/saveBtnValue"
             android:textAllCaps="false"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/scrollView2"

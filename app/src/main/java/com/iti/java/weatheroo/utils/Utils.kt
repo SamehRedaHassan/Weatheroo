@@ -236,5 +236,9 @@ class Utils {
            snack.show()
        }
 
+       fun getDayOfWeek(timestamp: Long, language: String): String {
+           return SimpleDateFormat("EEEE",  Locale(language)).format(timestamp * 1000)
+       }
+
    }
 }

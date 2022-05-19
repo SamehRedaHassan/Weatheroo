@@ -1,13 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="units">Units</string>
-    <string name="Add_Alarm">Add Alarm</string>
-    <string name="reason">what is the reason for the alarm ?</string>
-    <string name="startDate">Start Date</string>
-    <string name="endDate">End Date</string>
-    <string name="enable_dialog">Enable Dialog</string>
-    <string name="add_alert">Add</string>
-    <string name="requestPosition">how do you want to configure location ?</string>
-    <string name="cancelPositionRequest">Cancel</string>
-    <string name="approvePositionRequest">Let\'s Go</string>
+    <string name="Add_Alarm">اضف منبه</string>
+    <string name="reason">عن ماذا تريد التنبيه ؟</string>
+    <string name="startDate">تاريخ البداية</string>
+    <string name="endDate">تاريخ النهاية</string>
+    <string name="enable_dialog">تفعيل الاشعارات</string>
+    <string name="add_alert">اضف</string>
+    <string name="requestPosition">كيف تريد تحديد موقعك ؟</string>
+    <string name="cancelPositionRequest">الغاء</string>
+    <string name="approvePositionRequest">لنبدأ</string>
+    <string name="homeButtonNav">الرئيسية</string>
+    <string name="favouriteButtomNav">المفضلة</string>
+    <string name="alertsButtonNav">المنبهات</string>
+    <string name="settingsButtomNav">الاعدادات</string>
+    <string name="todayLabel">اليوم</string>
+    <string name="nextWeekLabel">الاسبوع المقبل</string>
+    <string name="alarm_time">وقت التنبيه</string>
+    <string name="locationLabel">الموقع</string>
+    <string name="languageLabel">اللغة</string>
+    <string name="arabicLang">العريبة</string>
+    <string name="mapLabel">الخريطة</string>
+    <string name="gpsLabel">محدد الموقع</string>
+    <string name="unitsLabel">الوحدات</string>
+    <string name="imperial">امبريال    (الحرارة ف الرياح م/س)</string>
+    <string name="standardLabel">قياسي    (الحرارة ك الرياح م/ث)</string>
+    <string name="metricUnit">ميتريك    (الحرارة س الرياح م/ث)</string>
+    <string name="saveBtnValue">حفظ</string>
 </resources>

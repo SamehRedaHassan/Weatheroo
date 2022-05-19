@@ -2,6 +2,9 @@ package com.iti.java.weatheroo
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
+import android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +12,7 @@ import android.view.ViewGroup
 import com.iti.java.weatheroo.databinding.FragmentSettingsBinding
 import com.iti.java.weatheroo.map.view.MapsActivity
 import com.iti.java.weatheroo.utils.Constants
+import com.iti.java.weatheroo.utils.LocaleManager
 import com.iti.java.weatheroo.utils.Utils
 
 class SettingsFragment : Fragment() {
@@ -52,9 +56,14 @@ class SettingsFragment : Fragment() {
             when (checkedId) {
                 binding!!.radioBtnEnglish.id -> {
                     Utils.saveCurrentLang(Constants.ENGLISH_LANGUAGE, requireContext())
+                    Log.e("TAG", "setupListeners: "+Utils.getCurrentLang(requireContext()), )
+                    LocaleManager.setLocale(requireContext())
                 }
                 binding!!.radioBtnArabic.id -> {
                     Utils.saveCurrentLang(Constants.Arabic_LANGUAGE, requireContext())
+                    Log.e("TAG", "setupListeners: "+Utils.getCurrentLang(requireContext()), )
+
+                    LocaleManager.setLocale(requireContext())
                 }
             }
         }
@@ -86,6 +95,12 @@ class SettingsFragment : Fragment() {
                     Utils.setCurrentUnit(requireContext(),Constants.METRIC)
                 }
             }
+        }
+
+        binding!!.saveSettingsBtn.setOnClickListener{
+
+            val Home = Intent(requireContext(),MainActivity::class.java)
+            startActivity(Home)
         }
     }
 
