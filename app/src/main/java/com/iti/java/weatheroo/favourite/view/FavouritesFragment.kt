@@ -64,10 +64,10 @@ class FavouritesFragment : Fragment() , NavigationDelegate {
 
 
         favouriteViewModelFactory = FavouritesViewModelFactory(
-            RepositoryImpl(requireContext(), retrofitService, LocalSourceImpl(requireContext())), requireContext())
+            RepositoryImpl.getInstance(requireContext(), retrofitService, LocalSourceImpl(requireContext())), requireContext())
         favViewModel =  ViewModelProvider(
                     this,
-            FavouritesViewModelFactory(RepositoryImpl(requireContext(), retrofitService,LocalSourceImpl(requireContext())),requireContext())
+            FavouritesViewModelFactory(RepositoryImpl.getInstance(requireContext(), retrofitService,LocalSourceImpl(requireContext())),requireContext())
         ).get(FavouritesViewModel::class.java)
 
 

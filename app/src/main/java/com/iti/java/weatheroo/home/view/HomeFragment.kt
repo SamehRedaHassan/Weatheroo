@@ -102,7 +102,7 @@ class HomeFragment : Fragment() {
     private fun configureUI() {
         viewModel = ViewModelProvider(
             this,
-            HomeViewModelFactory(RepositoryImpl(requireContext(), retrofitService,LocalSourceImpl(requireContext())),requireContext())
+            HomeViewModelFactory(RepositoryImpl.getInstance(requireContext(), retrofitService,LocalSourceImpl(requireContext())),requireContext())
         ).get(HomeViewModel::class.java)
 
       dailyTemperatureRecyclerView = binding!!.todayWeatherRecycler

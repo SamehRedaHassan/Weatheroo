@@ -18,21 +18,24 @@ import java.util.concurrent.TimeUnit
 
 private const val APP_ID = "c22e271e9ebc0d0e0e406902c6b750ee"
 
-class RepositoryImpl(private val context: Context,
+class RepositoryImpl private constructor(private val context: Context,
                      private val retrofitService: RetrofitService,
                      var localSource: LocalSource
 ) : Repository {
+    val sharedPreference =
+        context.getSharedPreferences(Constants.Shared_Preferences, Context.MODE_PRIVATE)
+    companion object {
+        private  var repo: RepositoryImpl? = null
 
-    private var repo: RepositoryImpl? = null
-    val sharedPreference = context.getSharedPreferences(Constants.Shared_Preferences, Context.MODE_PRIVATE)
 
-    fun getInstance(context: Context) : RepositoryImpl? {
-        if (repo == null) {
-            repo = RepositoryImpl(context,retrofitService,localSource)
+        fun getInstance( context: Context,
+                          retrofitService: RetrofitService,
+                         localSource: LocalSource): RepositoryImpl {
+
+            return repo ?: RepositoryImpl(context, retrofitService, localSource)
+
         }
-        return repo
     }
-
     override fun getWeatherForeCast(lat: Double, Lon: Double): Call<WeatherResponse> {
         return retrofitService.getWeather(lat,Lon,APP_ID, sharedPreference.getString(Constants.Measure_Unit,"METRIC")?:"METRIC",Utils.getCurrentLang(context))
     }

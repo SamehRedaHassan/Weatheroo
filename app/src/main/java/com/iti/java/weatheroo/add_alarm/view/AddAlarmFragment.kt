@@ -46,7 +46,7 @@ class AddAlarmFragment : Fragment() {
         viewModel = ViewModelProvider(
             this,
             AlertsViewModelFactory(
-                RepositoryImpl(
+                RepositoryImpl.getInstance(
                     requireContext(), RetrofitService.getInstance(),
                     LocalSourceImpl(requireContext())
                 ), requireContext()
@@ -62,7 +62,7 @@ class AddAlarmFragment : Fragment() {
         viewModel = ViewModelProvider(
             this,
             AlertsViewModelFactory(
-                RepositoryImpl(
+                RepositoryImpl.getInstance(
                     requireContext(), RetrofitService.getInstance(),
                     LocalSourceImpl(requireContext())
                 ), requireContext()

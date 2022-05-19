@@ -46,7 +46,7 @@ class AlertsFragment : Fragment() ,DeleteDelegate{
         viewModel =  ViewModelProvider(
             this,
             AlertsViewModelFactory(
-                RepositoryImpl(requireContext(), retrofitService,
+                RepositoryImpl.getInstance(requireContext(), retrofitService,
                     LocalSourceImpl(requireContext())
                 ),requireContext())
         ).get(AlertsViewModel::class.java)
@@ -58,7 +58,7 @@ class AlertsFragment : Fragment() ,DeleteDelegate{
         viewModel =  ViewModelProvider(
             this,
             AlertsViewModelFactory(
-                RepositoryImpl(requireContext(), retrofitService,
+                RepositoryImpl.getInstance(requireContext(), retrofitService,
                     LocalSourceImpl(requireContext())
                 ),requireContext())
         ).get(AlertsViewModel::class.java)
@@ -71,7 +71,7 @@ class AlertsFragment : Fragment() ,DeleteDelegate{
         viewModel =  ViewModelProvider(
             this,
             AlertsViewModelFactory(
-                RepositoryImpl(requireContext(), retrofitService,
+                RepositoryImpl.getInstance(requireContext(), retrofitService,
                     LocalSourceImpl(requireContext())
                 ),requireContext())
         ).get(AlertsViewModel::class.java)

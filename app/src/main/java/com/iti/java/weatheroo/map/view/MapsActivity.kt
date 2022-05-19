@@ -52,7 +52,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun configureUI(){
         viewModel = ViewModelProvider(
             this,
-            MapViewModelFactory(RepositoryImpl(this, retrofitService,LocalSourceImpl(this)),this)
+            MapViewModelFactory(RepositoryImpl.getInstance(this, retrofitService,LocalSourceImpl(this)),this)
         ).get(MapViewModel::class.java)
         saveBtn = binding.saveLocationBtn
         saveBtn.visibility = View.INVISIBLE

@@ -57,7 +57,7 @@ class WeatherCoroutineWorker(val context: Context, val params: WorkerParameters)
         //suspend function work in background on default dispatcher
         //can't update ui on background thread
         //call to network here no coroutine needed
-        repo = RepositoryImpl(
+        repo = RepositoryImpl.getInstance(
             context, RetrofitService.getInstance(),
             LocalSourceImpl(context)
         )
