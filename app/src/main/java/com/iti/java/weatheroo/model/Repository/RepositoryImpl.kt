@@ -24,6 +24,7 @@ class RepositoryImpl(private val context: Context,
 ) : Repository {
 
     private var repo: RepositoryImpl? = null
+    val sharedPreference = context.getSharedPreferences(Constants.Shared_Preferences, Context.MODE_PRIVATE)
 
     fun getInstance(context: Context) : RepositoryImpl? {
         if (repo == null) {
@@ -33,7 +34,7 @@ class RepositoryImpl(private val context: Context,
     }
 
     override fun getWeatherForeCast(lat: Double, Lon: Double): Call<WeatherResponse> {
-        return retrofitService.getWeather(lat,Lon,APP_ID, Utils.getCurrentTemperatureUnit(context),Utils.getCurrentLang(context))
+        return retrofitService.getWeather(lat,Lon,APP_ID, sharedPreference.getString(Constants.Measure_Unit,"METRIC")?:"METRIC",Utils.getCurrentLang(context))
     }
 
     override fun getAllFavouriteLocations(): LiveData<List<FavouriteLocation>> {

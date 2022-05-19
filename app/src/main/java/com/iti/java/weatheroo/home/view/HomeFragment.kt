@@ -60,7 +60,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         configureUI()
         initData()
     }
@@ -94,10 +93,6 @@ class HomeFragment : Fragment() {
             job = CoroutineScope(Dispatchers.IO).launch {
                 Log.i("UUU", "initData1: ")
                 viewModel.getCurrentWeather()
-//                withContext(Dispatchers.Main){
-//
-//                    //adapter.notifyDataSetChanged()
-//                }
             }
         }
     }
@@ -146,7 +141,7 @@ class HomeFragment : Fragment() {
         Glide.with(requireContext()).load(Constants.ICON_BASE_URL +  viewModel.currentWeather.weather.get(0).icon + Constants.PNG) .into(binding!!.weatherImage)
         binding!!.locationTextView.text = Utils.getCurrentCityFromLatLon(requireContext(),Utils.getCurrentLattitude(requireContext()),Utils.getCurrentLongitude(requireContext()))
         binding!!.locationTextView.text = Utils.getCurrentCityFromLatLon(requireContext(),Utils.getCurrentLattitude(requireContext()),Utils.getCurrentLongitude(requireContext()))
-        binding!!.temperatureTextView.text = viewModel.currentWeather.temp.toString().subSequence(0,2).toString() + Utils.getCurrentTemperatureUnit(requireContext())
+        binding!!.temperatureTextView.text = viewModel.currentWeather.temp.toInt().toString()+ Utils.getCurrentTemperatureUnit(requireContext())
         binding!!.statusTxtView.text = viewModel.currentWeather.weather.get(0).main
         binding!!.windSpeedTextView.text = viewModel.currentWeather.windSpeed.toString() + Utils.getCurrentWindUnit(requireContext())
         binding!!.humidityTxtView.text = viewModel.currentWeather.humidity.toString() + Utils.getCurrentHumidityUnit()

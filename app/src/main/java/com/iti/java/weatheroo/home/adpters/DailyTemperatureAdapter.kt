@@ -18,9 +18,6 @@ import com.iti.java.weatheroo.utils.Utils
 class DailyTemperatureAdapter(var context: Context, var data: List<CurrentWeatherModel>) :
     RecyclerView.Adapter<DailyTemperatureAdapter.DailyViewHolder>() {
 
-    //  var context: Context? = null
-
-
     class DailyViewHolder(var layout: View ) : RecyclerView.ViewHolder(layout) {
         var timeTextView: TextView = itemView.findViewById(R.id.timeTxtView)
         var statusImageView: ImageView = itemView.findViewById(R.id.imageView)

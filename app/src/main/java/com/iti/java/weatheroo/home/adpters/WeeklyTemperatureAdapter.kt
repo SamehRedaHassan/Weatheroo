@@ -38,8 +38,6 @@ class WeeklyTemperatureAdapter (val context: Context, var data: List<DailyWeathe
         Glide.with(context).load(Constants.ICON_BASE_URL +  data.get(position).weather.get(0).icon + Constants.PNG) .into(holder.statusImageView)
         holder.tempMaxTextView.setText(data.get(position).temp.max.toString() + Utils.getCurrentTemperatureUnit(context))
         holder.tempMinTextView.setText(data.get(position).temp.min.toString() + Utils.getCurrentTemperatureUnit(context))
-
-
     }
 
     override fun getItemCount(): Int {

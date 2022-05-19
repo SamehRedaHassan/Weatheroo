@@ -61,13 +61,6 @@ class FavouritesFragment : Fragment() , NavigationDelegate {
     override fun onResume() {
         super.onResume()
         favouritesPlacesAdapter.notifyDataSetChanged()
-//        if(!(NetworkChangeReceiver.isThereInternetConnection)){
-//            Log.e(
-//                "snackbaaaaaaaaar",
-//                "snackbaaaaaaaaar:${NetworkChangeReceiver.isThereInternetConnection} "
-//            )
-//            showNoNetSnackbar()
-//        }
 
 
         favouriteViewModelFactory = FavouritesViewModelFactory(
@@ -118,7 +111,7 @@ class FavouritesFragment : Fragment() , NavigationDelegate {
 
 
         val mGridLayoutManager: GridLayoutManager
-// ...
+
         mGridLayoutManager = GridLayoutManager(activity, 2)
 
         val manager: RecyclerView.LayoutManager = mGridLayoutManager
@@ -127,7 +120,6 @@ class FavouritesFragment : Fragment() , NavigationDelegate {
 
         favouritesPlacesAdapter.notifyDataSetChanged()
         binding?.btnAddFavId?.setOnClickListener{
-            Log.i("TEEET", "onBindViewHolder: ")
             val myIntent = Intent(context, MapsActivity::class.java)
             myIntent.putExtra(Constants.SOURCE_FRAGMENT, Constants.FAVOURITES) //Optional parameters
             context?.startActivity(myIntent)
@@ -141,6 +133,4 @@ class FavouritesFragment : Fragment() , NavigationDelegate {
     override fun deleteFav(location: FavouriteLocation) {
         favViewModel.deleteFavourite(location)
     }
-
-
 }

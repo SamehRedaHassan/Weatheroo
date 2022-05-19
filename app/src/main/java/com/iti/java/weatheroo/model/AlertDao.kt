@@ -6,8 +6,7 @@ import java.util.*
 
 @Dao
 interface AlertDao {
-//    @get:Query("SELECT * FROM Alarm")
-//    val getAllAlarms: LiveData<List<Alarm>>
+
 
     @Query("SELECT * FROM MyAlert")
     fun getAllAlarms() : LiveData<List<MyAlert>>
@@ -17,9 +16,6 @@ interface AlertDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAlarm(myAlert: MyAlert?)
-
-//    @Update
-//    fun updateAlarm(alarm: Alarm?)
 
     @Query("SELECT * FROM MyAlert WHERE id LIKE :id")
     fun getAlarm(id: UUID?): MyAlert?

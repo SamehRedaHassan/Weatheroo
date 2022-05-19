@@ -9,12 +9,9 @@ import java.util.*
 
 class LocalSourceImpl(context : Context) : LocalSource {
 
-    //vars
      private var favDao: FavouritesDao?
      private var weatherDao : WeatherDao?
      private var alertDao : AlertDao?
-     // override val allStoredAlarms: LiveData<List<Alert>>
-
 
     init {
         val db: DatabaseLayer = DatabaseLayer.getDBInstance(context)

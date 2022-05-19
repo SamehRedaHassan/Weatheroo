@@ -12,15 +12,4 @@ interface WeatherDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveCurrentWeather(weatherObj: WeatherResponse?)
-
-//    @Query("DELETE FROM weatherresponse WHERE isFav = 0")
-//    fun deleteHomeWeatherObjByLatLongId()
-
-
-//    @Update
-//    fun updateHomeWeatherObj(weatherObj: WeatherResponse?)
-
-//
-//    @Query("SELECT * FROM weatherresponse WHERE loc = :location")
-//    fun getHomeWeatherObj(location: String?): LiveData<WeatherResponse>
 }

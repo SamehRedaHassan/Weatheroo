@@ -72,7 +72,6 @@ class SplashActivity : AppCompatActivity() {
 
                      }
                     }
-                    // Single-choice items (initialized with checked item)
                     .setSingleChoiceItems(locationOptions, checkedItem) { dialog, which ->
                         checkedItem = which
                     }

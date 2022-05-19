@@ -2,6 +2,7 @@ package com.iti.java.weatheroo.utils.worker
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.ContentResolver
 import android.content.Context
 import android.os.Build
 import android.util.Log
@@ -13,9 +14,9 @@ import java.util.*
 //import java.util.concurrent.TimeUnit
 
 
-
 import android.graphics.PixelFormat
 import android.media.MediaPlayer
+import android.net.Uri
 import android.provider.Settings
 
 import android.view.LayoutInflater
@@ -26,8 +27,6 @@ import android.widget.TextView
 import android.view.ViewGroup
 import android.view.WindowManager.LayoutParams
 import androidx.annotation.RequiresApi
-//import kotlinx.coroutines.CoroutineScope
-//import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.iti.java.weatheroo.model.MyAlert
 import com.iti.java.weatheroo.model.Repository.Repository
@@ -37,7 +36,6 @@ import com.iti.java.weatheroo.model.network.RetrofitService
 import com.iti.java.weatheroo.model.room.LocalSourceImpl
 import com.iti.java.weatheroo.utils.Constants
 import com.iti.java.weatheroo.utils.Utils
-import com.iti.java.weatheroo.utils.Utils.Utils.getDate
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -51,7 +49,7 @@ class WeatherCoroutineWorker(val context: Context, val params: WorkerParameters)
     CoroutineWorker(context, params) {
     lateinit var repo: Repository
     var customNotificationDialogView: View? = null
-    var mp : MediaPlayer? = null
+    var mp: MediaPlayer? = null
     var cnt = 0
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -67,17 +65,17 @@ class WeatherCoroutineWorker(val context: Context, val params: WorkerParameters)
         val alert = repo.getAlarm(UUID.fromString(id))
 
         if (alert == null) {
-            Log.e("Work", "doWork: Null alert", )
+            Log.e("Work", "doWork: Null alert")
         } else if (alert?.typeBool == true) {
             Log.e("Work", "doWork:  Iam true")
             val msg = getAlertsFromApi(id!!)
-                if (Settings.canDrawOverlays(context)) {
-                    GlobalScope.launch(Dispatchers.Main) {
-                        displayNotification(cnt.toString(), "alert", msg)
-                        setMyWindowManger("ALERT" , msg)
-                    }
+            if (Settings.canDrawOverlays(context)) {
+                GlobalScope.launch(Dispatchers.Main) {
+                    displayNotification(cnt.toString(), "Weather Notification", msg)
+                    setMyWindowManger(msg, msg)
+                }
             } else {
-                displayNotification(cnt.toString(), "ALERT", msg)
+                displayNotification(cnt.toString(), msg, msg)
             }
             enableNextAlarm(alert)
         } else {
@@ -89,11 +87,10 @@ class WeatherCoroutineWorker(val context: Context, val params: WorkerParameters)
     }
 
     private fun enableNextAlarm(myAlert: MyAlert) {
-      //  if (Utils.isTodayInRange(myAlert?.startDate!!.getDate(), myAlert.endDate.getDate())) {
-            val calender = Calendar.getInstance()
-            val currentDate = Date(calender.timeInMillis)
-            calender.add(Calendar.DATE, 1)
-        if(calender.time.before(Date(myAlert.endDate))){
+        val calender = Calendar.getInstance()
+        val currentDate = Date(calender.timeInMillis)
+        calender.add(Calendar.DATE, 1)
+        if (calender.time.before(Date(myAlert.endDate))) {
             val nextTimeDelay = calender.timeInMillis - currentDate.time
             val nextRequest = OneTimeWorkRequestBuilder<WeatherCoroutineWorker>()
                 .setInputData(
@@ -102,7 +99,7 @@ class WeatherCoroutineWorker(val context: Context, val params: WorkerParameters)
                 .setInitialDelay(nextTimeDelay, TimeUnit.MILLISECONDS).build()
             WorkManager.getInstance(context)
                 .enqueueUniqueWork(myAlert?.id.toString(), ExistingWorkPolicy.REPLACE, nextRequest)
-    //    }
+
         }
     }
 
@@ -122,22 +119,23 @@ class WeatherCoroutineWorker(val context: Context, val params: WorkerParameters)
             .setContentTitle(task)
             .setContentText(desc)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-           // .setSound(Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.packageName + "/" + R.raw.alarmsound))
+            .setSound(Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.packageName + "/" + com.iti.java.weatheroo.R.raw.bell))
             .setAutoCancel(true)
         val notificationManager = NotificationManagerCompat.from(context)
         notificationManager.notify(Integer.valueOf(id), builder.build())
     }
 
-    private fun setMyWindowManger(name : String, des : String) {
+    private fun setMyWindowManger(name: String, des: String) {
 
-        val inflater = applicationContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val inflater =
+            applicationContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         customNotificationDialogView =
             inflater.inflate(com.iti.java.weatheroo.R.layout.dialoge, null)
 
-        initView(customNotificationDialogView!! ,name ,des )
-        if(mp == null){
-          //  mp = MediaPlayer.create(applicationContext , com.iti.java.weatheroo.R.raw.alarmsound);
+        initView(customNotificationDialogView!!, name, des)
+        if (mp == null) {
+            mp = MediaPlayer.create(applicationContext, com.iti.java.weatheroo.R.raw.bell);
 
         }
         mp?.start();
@@ -148,7 +146,7 @@ class WeatherCoroutineWorker(val context: Context, val params: WorkerParameters)
         } else {
             LayoutParams.TYPE_PHONE
         }
-        var windowManager=
+        var windowManager =
             applicationContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val width = (applicationContext.resources.displayMetrics.widthPixels * 0.85).toInt()
 
@@ -164,13 +162,13 @@ class WeatherCoroutineWorker(val context: Context, val params: WorkerParameters)
         }
     }
 
-    private fun initView(customNotificationDialogView: View , name : String , des : String) {
+    private fun initView(dialogView: View, name: String, des: String) {
 
-        val alarmName =  customNotificationDialogView.findViewById<TextView>(com.iti.java.weatheroo.R.id.alarmDialogNameId)
-        val alarmDesc =  customNotificationDialogView.findViewById<TextView>(com.iti.java.weatheroo.R.id.AlarmDialogMsgId)
-        val okBtn = customNotificationDialogView.findViewById<Button>(com.iti.java.weatheroo.R.id.AlarmDialogOkayButtonId)
+        val alarmName =
+            dialogView.findViewById<TextView>(com.iti.java.weatheroo.R.id.alarmDialogNameId)
+        val okBtn =
+            dialogView.findViewById<Button>(com.iti.java.weatheroo.R.id.AlarmDialogOkayButtonId)
         alarmName.text = name
-        alarmDesc.text = des
         okBtn.setOnClickListener {
             mp?.release()
             close()
@@ -190,14 +188,9 @@ class WeatherCoroutineWorker(val context: Context, val params: WorkerParameters)
     }
 
     private suspend fun getAlertsFromApi(alarmId: String): String {
-        var stringMsg = ""
+        var stringMsg = "No thing to worry about "
         var event = ""
         var alarmObj: MyAlert?
-//        val instance = RepositoryImpl().getInstance(context,
-//            RetrofitService.getInstance(),
-//            LocalSourceImpl(applicationContext),
-//            applicationContext
-//        )
         var response: Call<WeatherResponse>? = null
         alarmObj = repo.getAlarm(UUID.fromString(alarmId))
         response =
@@ -211,20 +204,20 @@ class WeatherCoroutineWorker(val context: Context, val params: WorkerParameters)
                 response: Response<WeatherResponse>
             ) {
                 if (response.body() != null) {
-                    if(!(response.body()?.alerts.isNullOrEmpty()))
-                    {
+                    if (!(response.body()?.alerts.isNullOrEmpty())) {
                         for (item in response.body()?.alerts!!) {
                             event = item.tags[0]
-                            stringMsg = if (event == alarmObj?.reasonOfAlarm.toString()) { //the alert matches
-                                "You Need To be Careful there is danger coming"
-                            } else { //the alert doesn't match
-                                "Every thing is fine "
-                            }
+                            stringMsg =
+                                if (event == alarmObj?.reasonOfAlarm.toString()) { //the alert matches
+                                    "unstable weather please becareful"
+                                } else { //the alert doesn't match
+                                    "No thing to worry about "
+                                }
                         } //there is no alerts
                     }
                     //the list is empty
                     else {
-                        stringMsg = "Every thing is fine "
+                        stringMsg = "No thing to worry about "
                     }
                 }
 
@@ -238,8 +231,8 @@ class WeatherCoroutineWorker(val context: Context, val params: WorkerParameters)
             }
 
         })
-       return stringMsg
+        return stringMsg
     }
-    }
+}
 
 

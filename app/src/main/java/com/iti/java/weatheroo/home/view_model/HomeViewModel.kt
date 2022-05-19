@@ -34,10 +34,8 @@ class HomeViewModel(private val _irepo : Repository,val context: Context): ViewM
                 _irepo.saveCurrentWeather(weatherObj)
 
             }
-
             override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
             }
-
         })
     }
     fun getLocalWeather() :LiveData<List<WeatherResponse>> {

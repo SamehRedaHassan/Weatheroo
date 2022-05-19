@@ -6,14 +6,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/favouritePlaceCell"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="80dp"
     app:cardCornerRadius="4dp"
-    app:cardElevation="4dp"
-    app:cardUseCompatPadding="true"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    app:cardElevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -22,11 +17,11 @@
         <TextView
             android:id="@+id/favouritePlaceTxtView"
             android:layout_width="0dp"
-            android:layout_height="81dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
-            android:gravity="fill"
-            android:text="18°"
+            android:gravity="start"
+            android:text="aaaaaaaaaaaaa"
             android:textColor="@color/midnightblue"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"

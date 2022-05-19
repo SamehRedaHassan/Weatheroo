@@ -57,9 +57,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         saveBtn = binding.saveLocationBtn
         saveBtn.visibility = View.INVISIBLE
 
-        //favourites  save to room (Lat Lon name) //finish activity
         saveBtn.setOnClickListener {
-           // saveLatLonToSharedPreferences()
 
             finish()
             val screen = intent.getStringExtra(Constants.SOURCE_FRAGMENT)
@@ -116,7 +114,7 @@ private fun saveLatLonToSharedPreferences(){
 
 
     private fun addPinLocationOnMap(){
-        val currentLoc = LatLng(26.8206 , 30.8025)
+        val currentLoc = LatLng(27.8206 , 33.8025)
         val addressInText = Utils.getCurrentCityFromLatLon(this,currentLoc.latitude, currentLoc.longitude)
         mMap.addMarker(MarkerOptions().position(currentLoc).title(addressInText))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLoc))
